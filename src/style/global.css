@@ -58,6 +58,8 @@ body {
     position: absolute;
     inset: 0;
     background: var(--background);
+}
+.hide-main-menu{
     display: none;
 }
 
