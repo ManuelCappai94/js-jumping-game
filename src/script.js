@@ -1,9 +1,11 @@
 const gameCanvas = document.querySelector(".game")
 const mainMenu = gameCanvas.querySelector(".main-menu")
 const mainLayer = gameCanvas.querySelector(".game-layer--main")
-const player = mainLayer.querySelector(".player")
+const playerElement = mainLayer.querySelector(".player")
 
-console.log(player)
+import { updatePlayer, player, keys} from "./player.js"
+
+
 
 function initMenuActions(){
     mainMenu.addEventListener("click", (e)=>{
@@ -15,7 +17,8 @@ function initMenuActions(){
 
         if(action === "start"){
             mainMenu.classList.add("hide-main-menu")
-            console.log("start-game")
+            
+            requestAnimationFrame(game)
         }
 
         if(action === "exit"){
@@ -25,5 +28,32 @@ function initMenuActions(){
     } )
 }
 
+function renderPLayer(){
+    playerElement.style.transform = `translate(${player.x}px)`
+
+    const isMoving = keys.left || keys.right
+
+   playerElement.classList.toggle("running", isMoving);
+   playerElement.classList.toggle("idle", !isMoving)
+}
+
+
+
+let lastTime= 0;
+
+function game(timeStamp){
+    if (lastTime === 0) {
+            lastTime = timeStamp;
+    }
+
+    const deltaTime = timeStamp - lastTime;
+    lastTime = timeStamp; 
+    const deltaSeconds = deltaTime / 1000;
+
+    updatePlayer(deltaSeconds)
+    renderPLayer()
+    // console.log(deltaTime)
+    requestAnimationFrame(game)
+}
 
 initMenuActions()

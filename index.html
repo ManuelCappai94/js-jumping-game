@@ -6,7 +6,7 @@
     <title>Super Jumping Bros</title>
     <link rel="stylesheet" href="./src/style/global.css">
     <link rel="stylesheet" href="./src/style/player.css">
-    <script src="./src/script.js" defer></script>
+    <script type="module" src="./src/script.js" defer></script>
 </head>
 <body>
     <main>
@@ -16,7 +16,7 @@
                aria-labelledby="game-title"
                >
             <h1 id="game-title">Super Jumping Bros</h1>
-            <p>controls : A / D or ← / → to move — Space to jump</p>
+            <p>controls : A / D to move — Space to jump</p>
             <div class="actions-container">
                 <button
                      class="action-btn"
@@ -38,7 +38,7 @@
 
         <div class="game-layer game-layer--main">
             <div class="hud">
-            <!-- A / D or ← / → to move — Space to jump -->
+            <!-- A / D to move — Space to jump -->
             </div>
 
             <div class="player" id="player" aria-hidden="true">
