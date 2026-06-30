@@ -1,5 +1,6 @@
 import { startMusic, playMenuSound } from "./audio.js";
 import { updatePlayer, player, keys } from "./player.js";
+import { spawnObstacles } from "./obstacles.js";
 
 const gameCanvas = document.querySelector(".game");
 const mainMenu = gameCanvas.querySelector(".main-menu");
@@ -49,6 +50,7 @@ function game(timeStamp) {
 
     updatePlayer(deltaTime);
     renderPlayer();
+    spawnObstacles(deltaTime)
 
     requestAnimationFrame(game);
 }
