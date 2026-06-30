@@ -1,59 +1,56 @@
-const gameCanvas = document.querySelector(".game")
-const mainMenu = gameCanvas.querySelector(".main-menu")
-const mainLayer = gameCanvas.querySelector(".game-layer--main")
-const playerElement = mainLayer.querySelector(".player")
+import { startMusic, playMenuSound } from "./audio.js";
+import { updatePlayer, player, keys } from "./player.js";
 
-import { updatePlayer, player, keys} from "./player.js"
+const gameCanvas = document.querySelector(".game");
+const mainMenu = gameCanvas.querySelector(".main-menu");
+const mainLayer = gameCanvas.querySelector(".game-layer--main");
+const playerElement = mainLayer.querySelector(".player");
 
-
-
-function initMenuActions(){
-    mainMenu.addEventListener("click", (e)=>{
-        const btn = e.target.closest("[data-action]")
+function initMenuActions() {
+    mainMenu.addEventListener("click", async (e) => {
+        const btn = e.target.closest("[data-action]");
 
         if (!btn) return;
 
         const action = btn.dataset.action;
 
-        if(action === "start"){
-            mainMenu.classList.add("hide-main-menu")
-            
-            requestAnimationFrame(game)
+        if (action === "start") {
+            playMenuSound();
+            await startMusic();
+            mainMenu.classList.add("hide-main-menu");
+            requestAnimationFrame(game);
         }
 
-        if(action === "exit"){
-            console.log("exit-game")
+        if (action === "exit") {
+            playMenuSound();
+            console.log("exit-game");
         }
-
-    } )
+    });
 }
 
-function renderPLayer(){
-    playerElement.style.transform = `translate(${player.x}px)`
+function renderPlayer() {
+    playerElement.style.transform = `translate(${player.x}px, ${-player.y}px)`;
 
-    const isMoving = keys.left || keys.right
+    const isMoving = keys.left || keys.right;
 
-   playerElement.classList.toggle("running", isMoving);
-   playerElement.classList.toggle("idle", !isMoving)
+    playerElement.classList.toggle("running", isMoving);
+    playerElement.classList.toggle("idle", !isMoving);
 }
 
+let lastTime = 0;
 
-
-let lastTime= 0;
-
-function game(timeStamp){
+function game(timeStamp) {
     if (lastTime === 0) {
-            lastTime = timeStamp;
+        lastTime = timeStamp;
     }
 
-    const deltaTime = timeStamp - lastTime;
-    lastTime = timeStamp; 
-    const deltaSeconds = deltaTime / 1000;
+    const deltaTime = (timeStamp - lastTime) / 1000;
+    lastTime = timeStamp;
 
-    updatePlayer(deltaSeconds)
-    renderPLayer()
-    // console.log(deltaTime)
-    requestAnimationFrame(game)
+    updatePlayer(deltaTime);
+    renderPlayer();
+
+    requestAnimationFrame(game);
 }
 
-initMenuActions()
+initMenuActions();

@@ -10,50 +10,38 @@
 </head>
 <body>
     <main>
-      <section class="game" aria-labelledby="game-title">
-        <section
-             class="main-menu"
-               aria-labelledby="game-title"
-               >
-            <h1 id="game-title">Super Jumping Bros</h1>
-            <p>controls : A / D to move — Space to jump</p>
-            <div class="actions-container">
-                <button
-                     class="action-btn"
-                      data-action="start"
-                       type="button"
-                       >Start
-                    </button>
-                <button
-                     class="action-btn"
-                      data-action="exit"
-                       type="button"
-                       >Exit
-                    </button>
+        <section class="game" aria-labelledby="game-title">
+            <section class="main-menu" aria-labelledby="game-title">
+                <h1 id="game-title">Super Jumping Bros</h1>
+                <p>Controls: A / D to move, Space to jump</p>
+                <div class="actions-container">
+                    <button class="action-btn" data-action="start" type="button">Start</button>
+                    <button class="action-btn" data-action="exit" type="button">Exit</button>
+                </div>
+            </section>
+
+            <div class="game-layer game-layer--sky" aria-hidden="true"></div>
+            <div class="game-layer game-layer--background" aria-hidden="true"></div>
+
+            <div class="game-layer game-layer--main">
+                <div class="hud">
+                    <span>Coins 00</span>
+                    <span>World 1-1</span>
+                    <span>Time 300</span>
+                </div>
+
+                <div class="player" id="player" aria-hidden="true">
+                    <div class="head"></div>
+                    <div class="body"></div>
+                    <div class="arm left"></div>
+                    <div class="arm right"></div>
+                    <div class="leg left"></div>
+                    <div class="leg right"></div>
+                </div>
+
+                <div class="ground" aria-hidden="true"></div>
             </div>
         </section>
-
-        <div class="game-layer game-layer--sky" aria-hidden="true"></div>
-        <div class="game-layer game-layer--background" aria-hidden="true"></div>
-
-        <div class="game-layer game-layer--main">
-            <div class="hud">
-            <!-- A / D to move — Space to jump -->
-            </div>
-
-            <div class="player" id="player" aria-hidden="true">
-                <div class="head"></div>
-                <div class="body"></div>
-                <div class="arm left"></div>
-                <div class="arm right"></div>
-                <div class="leg left"></div>
-                <div class="leg right"></div>
-            </div>
-
-            <div class="ground" aria-hidden="true"></div>
-        </div>
-      </section>
     </main>
-    
 </body>
 </html>

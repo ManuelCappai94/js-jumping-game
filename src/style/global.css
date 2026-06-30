@@ -3,12 +3,17 @@
 }
 
 :root {
---background: #1f2937;
---text: #f3e0e0;
---playerHead: rgb(224, 176, 103);
---playerBody: rgb(32, 30, 30);
---terrain: #854d0e;
---herb: #16a34a;
+    --background: #111827;
+    --text: #fff7ed;
+    --mutedText: #fde68a;
+    --playerHead: rgb(224, 176, 103);
+    --playerBody: rgb(32, 30, 30);
+    --terrain: #8b5a2b;
+    --terrainDark: #5f3515;
+    --herb: #22c55e;
+    --gameBorder: #f8fafc;
+    --button: #ef4444;
+    --buttonShadow: #7f1d1d;
 }
 
 body {
@@ -16,51 +21,146 @@ body {
     min-height: 100vh;
     display: grid;
     place-items: center;
-    background: var(--background);
+    background:
+        radial-gradient(circle at 50% 20%, rgba(125, 211, 252, 0.2), transparent 28rem),
+        linear-gradient(135deg, #0f172a, #312e81 55%, #111827);
     font-family: Arial, sans-serif;
     color: var(--text);
 }
 
 .game {
     position: relative;
-    width: 800px;
-    height: 360px;
+    width: min(92vw, 800px);
+    height: min(54vw, 360px);
+    min-height: 280px;
     overflow: hidden;
-    border: 4px solid white;
+    border: 4px solid var(--gameBorder);
+    border-radius: 8px;
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.45);
+    isolation: isolate;
 }
 
-.game-layer.game-layer--sky{
+.game-layer {
     position: absolute;
     inset: 0;
+}
+
+.game-layer--sky {
     z-index: 1;
-    background: linear-gradient(#7dd3fc, #fef3c7);
+    background:
+        linear-gradient(#38bdf8 0%, #93c5fd 42%, #fde68a 100%);
 }
 
-/* we need a parallax background for this, montains + clouds */
-.game-layer--background{
+.game-layer--sky::before {
+    content: "";
     position: absolute;
-    inset: 0;
+    top: 34px;
+    right: 74px;
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    background: #fde047;
+    box-shadow:
+        0 0 0 14px rgba(253, 224, 71, 0.18),
+        0 0 54px 22px rgba(251, 191, 36, 0.45);
+    animation: sun-pulse 3s ease-in-out infinite alternate;
+}
+
+.game-layer--background {
     z-index: 2;
-    background: transparent;
+    background:
+        radial-gradient(ellipse at 13% 29%, #ffffff 0 8%, transparent 8.5%),
+        radial-gradient(ellipse at 20% 25%, #ffffff 0 6%, transparent 6.5%),
+        radial-gradient(ellipse at 27% 30%, #ffffff 0 9%, transparent 9.5%),
+        linear-gradient(135deg, transparent 0 58%, #6b7280 58.2% 73%, transparent 73.2%) 0 92px / 260px 150px repeat-x,
+        linear-gradient(225deg, transparent 0 57%, #4b5563 57.2% 72%, transparent 72.2%) 60px 112px / 300px 140px repeat-x,
+        linear-gradient(to top, rgba(34, 197, 94, 0.22), transparent 32%);
+    animation: background-drift 22s linear infinite;
 }
 
-.game-layer--main{
-    position: absolute;
-    inset: 0;
+.game-layer--main {
     z-index: 5;
-    background: transparent;
 }
 
-/*we need a background for the main menu*/
-/* for now is display none, is going to be the first thing showed */
-.main-menu{
+.main-menu {
     z-index: 10;
     position: absolute;
     inset: 0;
-    background: var(--background);
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 18px;
+    padding: 32px;
+    text-align: center;
+    background:
+        linear-gradient(rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.76)),
+        radial-gradient(circle at 50% 30%, rgba(250, 204, 21, 0.32), transparent 17rem),
+        linear-gradient(#38bdf8, #fef3c7);
 }
-.hide-main-menu{
+
+.main-menu h1 {
+    margin: 0;
+    max-width: 10ch;
+    color: #fef3c7;
+    font-size: clamp(2.4rem, 8vw, 4.8rem);
+    line-height: 0.9;
+    text-shadow: 0 5px 0 #7f1d1d, 0 12px 24px rgba(0, 0, 0, 0.38);
+}
+
+.main-menu p {
+    margin: 0;
+    color: var(--mutedText);
+    font-weight: 700;
+}
+
+.actions-container {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.action-btn {
+    min-width: 118px;
+    padding: 12px 20px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--button);
+    color: white;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 7px 0 var(--buttonShadow);
+    transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+
+.action-btn:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+    box-shadow: 0 9px 0 var(--buttonShadow);
+}
+
+.action-btn:active {
+    transform: translateY(5px);
+    box-shadow: 0 2px 0 var(--buttonShadow);
+}
+
+.hide-main-menu {
     display: none;
+}
+
+.hud {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: space-between;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.28);
 }
 
 .ground {
@@ -69,6 +169,40 @@ body {
     bottom: 0;
     width: 100%;
     height: 42px;
-    background: var(--terrain);
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.12) 0 10%, transparent 10% 20%) 0 0 / 44px 18px,
+        linear-gradient(var(--terrain), var(--terrainDark));
     border-top: 6px solid var(--herb);
+    box-shadow: inset 0 9px 0 rgba(255, 255, 255, 0.12);
+}
+
+.ground::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -12px;
+    height: 12px;
+    background:
+        radial-gradient(circle at 8px 12px, var(--herb) 0 7px, transparent 7.5px) 0 0 / 24px 12px repeat-x;
+}
+
+@keyframes sun-pulse {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes background-drift {
+    from {
+        background-position: 0 0, 0 0, 0 0, 0 92px, 60px 112px, 0 0;
+    }
+
+    to {
+        background-position: 220px 0, 220px 0, 220px 0, -260px 92px, -240px 112px, 0 0;
+    }
 }
