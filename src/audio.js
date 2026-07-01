@@ -2,12 +2,14 @@ let audioContext;
 let musicTimer;
 let masterGain;
 
-const melody = [
+/*const melody = [
     392, 392, 440, 494,
     523, 494, 440, 392,
     330, 330, 392, 440,
     494, 440, 392, 330
-];
+];*/
+
+let backgroundMusic;
 
 function getAudioContext() {
     if (!audioContext) {
@@ -38,6 +40,20 @@ function playTone(frequency, duration, type = "square", volume = 0.35) {
     oscillator.stop(now + duration + 0.02);
 }
 
+export function startMusic() {
+    if (!backgroundMusic) {
+        backgroundMusic = new Audio("./src/soundtrack/mainGameThemeLoop.wav");
+        backgroundMusic.loop = true;
+        backgroundMusic.volume = 0.6;
+    }
+    try {
+        backgroundMusic.play();
+    } catch (err) {
+        console.error("Couldn't play the music:", err);
+    }
+}
+
+/*
 export async function startMusic() {
     const ctx = getAudioContext();
 
@@ -58,7 +74,7 @@ export async function startMusic() {
 
         beat += 1;
     }, 180);
-}
+}*/
 
 export function playJumpSound() {
     playTone(660, 0.08, "square", 0.38);
