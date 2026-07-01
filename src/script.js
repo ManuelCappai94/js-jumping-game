@@ -93,7 +93,7 @@ function initMenuActions() {
         }
     });
 }
-
+// WIP ////////////////
 playerElement.addEventListener("animationend", (e) => {
     if (e.animationName === "player-flash") {
         playerElement.classList.remove("damage");

@@ -71,7 +71,7 @@ function getDifficultByScore(score){
 }
 
 function getRandomSpeed() {
-  const difficulty = getDifficultByScore(0)
+  const difficulty = getDifficultByScore(300)
   const offsetSpeed = Math.floor(Math.random() * 80);
   return  difficulty.baseSpeed + offsetSpeed;
 }
