@@ -1,12 +1,18 @@
 export let score = 0;
 
-export function addScore(score) {
+const scoreDisplay = document.querySelector("#score-display");
+
+export function addScore() {
     score += 10;
-    console.log(score);
-    return;
+
+    scoreDisplay.textContent = `Score ${score}`;
+    
+    return score;
 }
 
 export function resetScore() {
     score = 0;
+
+    scoreDisplay.textContent = `Score ${score}`;
 }
 
