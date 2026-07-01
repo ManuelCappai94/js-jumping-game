@@ -158,3 +158,9 @@ export function playMenuSound() {
      playTone(523, 0.08, "sine", 0.28);
 }
 
+export function setMusicPaused(isPaused) {
+    if (!currentMusic) return;
+
+    currentMusic.volume = isPaused ? 0.18 : 0.6;
+}
+

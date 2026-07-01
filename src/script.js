@@ -1,10 +1,11 @@
-import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, playMusic, stopMusic } from "./audio.js";
+import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, playMusic, stopMusic, setMusicPaused } from "./audio.js";
 import { updatePlayer, player, keys } from "./player.js";
 import { spawnObstacles, updateObstacles } from "./obstacles.js";
 import { boundaryCollision } from "./collision.js";
 
 const gameCanvas = document.querySelector(".game");
 const mainMenu = gameCanvas.querySelector(".main-menu");
+const pauseMenu = gameCanvas.querySelector(".pause-menu");
 const mainLayer = gameCanvas.querySelector(".game-layer--main");
 const playerElement = mainLayer.querySelector(".player");
 const ground = mainLayer.querySelector(".ground")
@@ -33,13 +34,43 @@ function initMenuActions() {
             stopMusic();
             playMenuSound();
             mainMusic();
+            setMusicPaused(false);
+            isGameStarted = true;
+            isPaused = false;
+            lastTime = 0;
             mainMenu.classList.add("hide-main-menu");
-            requestAnimationFrame(game);
+            pauseMenu.classList.add("hide-pause-menu");
+            gameCanvas.classList.remove("is-paused");
+            startGameLoop();
         }
 
         if (action === "exit") {
             playMenuSound();
             console.log("exit-game");
+        }
+    });
+
+    pauseMenu.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-action]");
+        if (!btn) return;
+
+        const action = btn.dataset.action;
+
+        if (action === "resume") {
+            resumeGame();
+        }
+
+        if (action === "main-menu") {
+            returnToMainMenu();
+        }
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (!isGameStarted || e.repeat) return;
+
+        if (e.code === "Escape" || e.code === "KeyP") {
+            e.preventDefault();
+            togglePause();
         }
     });
 }
@@ -74,8 +105,77 @@ function displayScore() {
 }
 
 let lastTime = 0;
+let isGameStarted = false;
+let isPaused = false;
+let animationFrameId = null;
+
+function startGameLoop() {
+    if (animationFrameId !== null) return;
+
+    animationFrameId = requestAnimationFrame(game);
+}
+
+function stopGameLoop() {
+    if (animationFrameId === null) return;
+
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+}
+
+function togglePause() {
+    if (isPaused) {
+        resumeGame();
+        return;
+    }
+
+    pauseGame();
+}
+
+function pauseGame() {
+    isPaused = true;
+    stopGameLoop();
+    keys.left = false;
+    keys.right = false;
+    keys.jump = false;
+    renderPlayer();
+    pauseMenu.classList.remove("hide-pause-menu");
+    gameCanvas.classList.add("is-paused");
+    setMusicPaused(true);
+    playMenuSound();
+}
+
+function resumeGame() {
+    isPaused = false;
+    lastTime = 0;
+    pauseMenu.classList.add("hide-pause-menu");
+    gameCanvas.classList.remove("is-paused");
+    setMusicPaused(false);
+    playMenuSound();
+    startGameLoop();
+}
+
+function returnToMainMenu() {
+    isGameStarted = false;
+    isPaused = false;
+    lastTime = 0;
+    stopGameLoop();
+    keys.left = false;
+    keys.right = false;
+    keys.jump = false;
+    renderPlayer();
+    pauseMenu.classList.add("hide-pause-menu");
+    mainMenu.classList.remove("hide-main-menu");
+    gameCanvas.classList.remove("is-paused");
+    playMenuSound();
+    stopMusic();
+    menuMusic();
+}
 
 function game(timeStamp) {
+    animationFrameId = null;
+
+    if (!isGameStarted || isPaused) return;
+
     if (lastTime === 0) {
         lastTime = timeStamp;
     }
@@ -97,7 +197,7 @@ function game(timeStamp) {
         return
     }
  console.log(player.hasTakenDamage)
-    requestAnimationFrame(game);
+    startGameLoop();
 }
 
 initMenuActions();

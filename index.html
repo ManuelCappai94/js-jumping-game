@@ -15,10 +15,19 @@
         <section class="game" aria-labelledby="game-title">
             <section class="main-menu" aria-labelledby="game-title">
                 <h1 id="game-title">Super Jumping Bros</h1>
-                <p>Controls: A / D to move, Space to jump</p>
+                <p>Controls: A / D to move, Space to jump, P or Esc to pause</p>
                 <div class="actions-container">
                     <button class="action-btn" data-action="start" type="button">Start</button>
                     <button class="action-btn" data-action="exit" type="button">Exit</button>
+                </div>
+            </section>
+
+            <section class="pause-menu hide-pause-menu" aria-labelledby="pause-title">
+                <h2 id="pause-title">Paused</h2>
+                <p>Press P or Esc to resume</p>
+                <div class="actions-container">
+                    <button class="action-btn" data-action="resume" type="button">Resume</button>
+                    <button class="action-btn action-btn--secondary" data-action="main-menu" type="button">Main Menu</button>
                 </div>
             </section>
 
