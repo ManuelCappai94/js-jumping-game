@@ -48,15 +48,12 @@ function playTone(frequency, duration, type = "square", volume = 0.35) {
 
 let currentMusic = null;
 
-function playMusic(track) {
-    if (currentMusic) {
-        currentMusic.pause();
-        currentMusic.currentTime = 0;
-    }
+export function playMusic(track) {
+    stopMusic();
 
     currentMusic = track;
-    currentMusic.mainGameTheme.loop = true;
-    currentMusic.mainGameTheme.volume = 0.6;
+    currentMusic.loop = true;
+    currentMusic.volume = 0.6;
 
     currentMusic.play().catch(console.error);
 }
@@ -67,33 +64,28 @@ export function stopMusic() {
     currentMusic.pause();
     currentMusic.currentTime = 0;
     currentMusic = null;
-
 }
 
 export function mainMusic() {
-    stopMusic();
-
     currentMusic = backgroundMusic.mainGameTheme;
-    currentMusic.play();
+    currentMusic.loop = true;
+    currentMusic.volume = 0.6;
+    currentMusic.play().catch(console.error);
 }
 
 export function menuMusic() {
-    stopMusic();
-
     currentMusic = backgroundMusic.mainMenuTheme;
-    currentMusic.play();
+    currentMusic.loop = true;
+    currentMusic.volume = 0.6;
+    currentMusic.play().catch(console.error);
 }
 
 export function victoryMusic() {
-    stopMusic();
-
     currentMusic = backgroundMusic.victoryTheme;
     currentMusic.play();
 }
 
 export function defeatMusic() {
-    stopMusic();
-
     currentMusic = backgroundMusic.defeatTheme;
     currentMusic.play();
 }

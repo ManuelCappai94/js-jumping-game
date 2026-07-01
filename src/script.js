@@ -1,4 +1,4 @@
-import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, stopMusic } from "./audio.js";
+import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, playMusic, stopMusic } from "./audio.js";
 import { updatePlayer, player, keys } from "./player.js";
 import { spawnObstacles, updateObstacles } from "./obstacles.js";
 
