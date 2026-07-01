@@ -83,7 +83,8 @@ body {
 }
 
 .main-menu,
-.pause-menu {
+.pause-menu,
+.game-over-menu {
     z-index: 10;
     position: absolute;
     inset: 0;
@@ -99,7 +100,8 @@ body {
         linear-gradient(#38bdf8, #fef3c7);
 }
 
-.pause-menu {
+.pause-menu,
+.game-over-menu {
     z-index: 11;
     background:
         linear-gradient(rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.86)),
@@ -107,8 +109,15 @@ body {
     backdrop-filter: blur(3px);
 }
 
+.game-over-menu {
+    background:
+        linear-gradient(rgba(69, 10, 10, 0.82), rgba(15, 23, 42, 0.9)),
+        radial-gradient(circle at 50% 36%, rgba(239, 68, 68, 0.32), transparent 13rem);
+}
+
 .main-menu h1,
-.pause-menu h2 {
+.pause-menu h2,
+.game-over-menu h2 {
     margin: 0;
     max-width: 10ch;
     color: #fef3c7;
@@ -117,12 +126,14 @@ body {
     text-shadow: 0 5px 0 #7f1d1d, 0 12px 24px rgba(0, 0, 0, 0.38);
 }
 
-.pause-menu h2 {
+.pause-menu h2,
+.game-over-menu h2 {
     font-size: clamp(2.6rem, 7vw, 4.2rem);
 }
 
 .main-menu p,
-.pause-menu p {
+.pause-menu p,
+.game-over-menu p {
     margin: 0;
     color: var(--mutedText);
     font-weight: 700;
@@ -174,7 +185,8 @@ body {
 }
 
 .hide-main-menu,
-.hide-pause-menu {
+.hide-pause-menu,
+.hide-game-over-menu {
     display: none;
 }
 

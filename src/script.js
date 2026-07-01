@@ -1,11 +1,12 @@
 import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, playMusic, stopMusic, setMusicPaused } from "./audio.js";
 import { updatePlayer, player, keys } from "./player.js";
-import { spawnObstacles, updateObstacles } from "./obstacles.js";
+import { spawnObstacles, updateObstacles, resetObstacles } from "./obstacles.js";
 import { boundaryCollision, collision  } from "./collision.js";
 
 const gameCanvas = document.querySelector(".game");
 const mainMenu = gameCanvas.querySelector(".main-menu");
 const pauseMenu = gameCanvas.querySelector(".pause-menu");
+const gameOverMenu = gameCanvas.querySelector(".game-over-menu");
 const mainLayer = gameCanvas.querySelector(".game-layer--main");
 const playerElement = mainLayer.querySelector(".player");
 const ground = mainLayer.querySelector(".ground")
@@ -37,9 +38,12 @@ function initMenuActions() {
             setMusicPaused(false);
             isGameStarted = true;
             isPaused = false;
+            isGameOver = false;
             lastTime = 0;
+            resetGameState();
             mainMenu.classList.add("hide-main-menu");
             pauseMenu.classList.add("hide-pause-menu");
+            gameOverMenu.classList.add("hide-game-over-menu");
             gameCanvas.classList.remove("is-paused");
             startGameLoop();
         }
@@ -65,8 +69,23 @@ function initMenuActions() {
         }
     });
 
+    gameOverMenu.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-action]");
+        if (!btn) return;
+
+        const action = btn.dataset.action;
+
+        if (action === "retry") {
+            restartGame();
+        }
+
+        if (action === "main-menu") {
+            returnToMainMenu();
+        }
+    });
+
     document.addEventListener("keydown", (e) => {
-        if (!isGameStarted || e.repeat) return;
+        if (!isGameStarted || isGameOver || e.repeat) return;
 
         if (e.code === "Escape" || e.code === "KeyP") {
             e.preventDefault();
@@ -108,6 +127,7 @@ function addScore(points) {
 let lastTime = 0;
 let isGameStarted = false;
 let isPaused = false;
+let isGameOver = false;
 let animationFrameId = null;
 
 function startGameLoop() {
@@ -133,6 +153,8 @@ function togglePause() {
 }
 
 function pauseGame() {
+    if (isGameOver) return;
+
     isPaused = true;
     stopGameLoop();
     keys.left = false;
@@ -158,6 +180,7 @@ function resumeGame() {
 function returnToMainMenu() {
     isGameStarted = false;
     isPaused = false;
+    isGameOver = false;
     lastTime = 0;
     stopGameLoop();
     keys.left = false;
@@ -165,11 +188,60 @@ function returnToMainMenu() {
     keys.jump = false;
     renderPlayer();
     pauseMenu.classList.add("hide-pause-menu");
+    gameOverMenu.classList.add("hide-game-over-menu");
     mainMenu.classList.remove("hide-main-menu");
     gameCanvas.classList.remove("is-paused");
     playMenuSound();
     stopMusic();
     menuMusic();
+}
+
+function resetGameState() {
+    player.x = 80;
+    player.y = 0;
+    player.velocityY = 0;
+    player.isJumping = false;
+    player.health = 100;
+    player.hasTakenDamage = false;
+    player.isDead = false;
+    keys.left = false;
+    keys.right = false;
+    keys.jump = false;
+    resetObstacles();
+    renderPlayer();
+}
+
+function restartGame() {
+    stopMusic();
+    playMenuSound();
+    mainMusic();
+    setMusicPaused(false);
+    isGameStarted = true;
+    isPaused = false;
+    isGameOver = false;
+    lastTime = 0;
+    resetGameState();
+    gameOverMenu.classList.add("hide-game-over-menu");
+    pauseMenu.classList.add("hide-pause-menu");
+    mainMenu.classList.add("hide-main-menu");
+    gameCanvas.classList.remove("is-paused");
+    startGameLoop();
+}
+
+function showGameOverMenu() {
+    isGameStarted = false;
+    isPaused = false;
+    isGameOver = true;
+    lastTime = 0;
+    stopGameLoop();
+    keys.left = false;
+    keys.right = false;
+    keys.jump = false;
+    renderPlayer();
+    pauseMenu.classList.add("hide-pause-menu");
+    gameOverMenu.classList.remove("hide-game-over-menu");
+    gameCanvas.classList.remove("is-paused");
+    defeatMusic();
 }
 
 function game(timeStamp) {
@@ -193,7 +265,7 @@ function game(timeStamp) {
     boundaryCollision(player, gameLayerRect, deltaTime )
 
     if (player.isDead) {
-        defeatMusic();
+        showGameOverMenu();
         console.log("DEATH BITCTH");
         return
     }

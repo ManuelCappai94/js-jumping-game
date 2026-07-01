@@ -142,3 +142,9 @@ export function updateObstacles(deltaTime, player, groundY) {
 
 //   console.log(obstacles);
 }
+
+export function resetObstacles() {
+  obstacles.forEach((obstacle) => obstacle.element.remove());
+  obstacles = [];
+  startTimer = 0;
+}
