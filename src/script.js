@@ -1,7 +1,7 @@
 import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, playMusic, stopMusic, setMusicPaused } from "./audio.js";
 import { updatePlayer, player, keys } from "./player.js";
 import { spawnObstacles, updateObstacles } from "./obstacles.js";
-import { boundaryCollision } from "./collision.js";
+import { boundaryCollision, collision  } from "./collision.js";
 
 const gameCanvas = document.querySelector(".game");
 const mainMenu = gameCanvas.querySelector(".main-menu");
@@ -98,10 +98,11 @@ function renderPlayer() {
     }
 }
 
-function displayScore() {
+let score = 0;
 
-    let score = 0;
-
+function addScore(points) {
+    score += points;
+    console.log(score);
 }
 
 let lastTime = 0;
