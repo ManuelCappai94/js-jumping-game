@@ -14,6 +14,7 @@ const backgroundMusic = {
     mainGameTheme: new Audio("./src/soundtrack/mainGameThemeLoop.wav"),
     victoryTheme: new Audio("./src/soundtrack/victoryTheme.wav"),
     defeatTheme: new Audio("./src/soundtrack/defeatTheme.wav"),
+    JumpSFX: new Audio("./src/soundtrack/jump.wav"),
 };
 
 
@@ -28,6 +29,7 @@ function getAudioContext() {
     return audioContext;
 }
 
+/*
 function playTone(frequency, duration, type = "square", volume = 0.35) {
     const ctx = getAudioContext();
     const oscillator = ctx.createOscillator();
@@ -44,7 +46,7 @@ function playTone(frequency, duration, type = "square", volume = 0.35) {
     gain.connect(masterGain);
     oscillator.start(now);
     oscillator.stop(now + duration + 0.02);
-}
+}*/
 
 let currentMusic = null;
 
@@ -56,6 +58,14 @@ export function playMusic(track) {
     currentMusic.volume = 0.6;
 
     currentMusic.play().catch(console.error);
+}
+
+let currentSFX = null;
+
+export function playSFX(track) {
+    currentSFX == track;
+
+    currentSFX.play().catch(console.catch);
 }
 
 export function stopMusic() {
@@ -119,7 +129,7 @@ export async function startMusic() {
 }*/
 
 export function playJumpSound() {
-    playTone(660, 0.08, "square", 0.38);
+    currentSFX = backgroundMusic.JumpSFX;
     setTimeout(() => playTone(880, 0.08, "square", 0.28), 55);
 }
 
@@ -130,3 +140,4 @@ export function playLandSound() {
 export function playMenuSound() {
     playTone(523, 0.08, "sine", 0.28);
 }
+
