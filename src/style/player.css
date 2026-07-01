@@ -97,6 +97,10 @@
     animation: idle 1s infinite alternate;
 }
 
+.player.damage {
+    animation: player-flash 1s ease;
+}
+
 @keyframes left-arm-run {
     from {
         transform: rotate(-35deg);
@@ -144,5 +148,23 @@
 
     to {
         top: 2px;
+    }
+}
+
+@keyframes player-flash {
+    0% {
+        filter: brightness(1);
+    }
+
+    30% {
+        filter: brightness(2.2);
+    }
+
+    60% {
+        filter: brightness(0.6);
+    }
+
+    100% {
+        filter: brightness(1);
     }
 }

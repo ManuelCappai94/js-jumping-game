@@ -23,13 +23,6 @@ const groundY = groundTop - gameLayerTop
 
 function initMenuActions() {
 
-    const startMusicOnce = () => {
-        menuMusic();
-        document.removeEventListener("click", startMusicOnce);
-    };
-
-    document.addEventListener("click", startMusicOnce);
-
     mainMenu.addEventListener("click", async (e) => {
         const btn = e.target.closest("[data-action]");
         if (!btn) return;
@@ -51,6 +44,12 @@ function initMenuActions() {
     });
 }
 
+playerElement.addEventListener("animationend", (e) => {
+    if (e.animationName === "player-flash") {
+        playerElement.classList.remove("damage");
+    }
+});
+
 function renderPlayer() {
 
     playerElement.style.transform = `translate(${player.x}px, ${-player.y}px)`;
@@ -59,6 +58,13 @@ function renderPlayer() {
 
     playerElement.classList.toggle("running", isMoving);
     playerElement.classList.toggle("idle", !isMoving);
+
+    if (player.hasTakenDamage) {
+        
+        playerElement.classList.add("damage");
+        player.hasTakenDamage = false;
+
+    }
 }
 
 function displayScore() {
@@ -90,7 +96,7 @@ function game(timeStamp) {
         console.log("DEATH BITCTH");
         return
     }
-
+ console.log(player.hasTakenDamage)
     requestAnimationFrame(game);
 }
 

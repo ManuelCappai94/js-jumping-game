@@ -1,5 +1,5 @@
 
-// let timer = 0
+let timer = 0
 
 export function collision(player, obstacle, groundY, deltaTime) {
     const obstacleLeft = obstacle.x;
@@ -30,16 +30,19 @@ function handleObstacleHit(player, obstacle,  deltaTime){
     
           player.x -= knockBackAmount 
           player.health -= obstacle.damage
+          player.hasTakenDamage = true
          
           obstacle.hasHit = true; 
         //   player.isInvincible = true;
         //   player.invincibilityTimer = player.invincibilityDuration;
+      
 
           if (player.health <= 0) {
                  player.health = 0;
                 player.isDead = true;
              }
-          console.log(player.health, player.isDead)
+        //   console.log(player.health, player.isDead)
+       
 }
 
 export function boundaryCollision(player, gameArea, deltaTime){

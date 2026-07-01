@@ -9,6 +9,7 @@ export const player = {
     velocityY: 0,
     isJumping: false,
     health : 100,
+    hasTakenDamage : false,
     // isInvincible: false,
     // invincibilityTimer: 0,
     // invincibilityDuration: 3,
@@ -74,6 +75,7 @@ export function updatePlayer(deltaTime, gameAreaWidth) {
             playLandSound();
         }
     }
+   
 
 //     if (player.isInvincible) {
 //         player.invincibilityTimer -= deltaTime;
