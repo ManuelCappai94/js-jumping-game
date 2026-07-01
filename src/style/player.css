@@ -156,14 +156,29 @@
         filter: brightness(1);
     }
 
-    30% {
+    20% {
         filter: brightness(4.2);
     }
 
-    60% {
-        filter: brightness(3.6);
+    40% {
+        filter: brightness(2.2);
     }
 
+    50% {
+        filter: brightness(4.2);
+    }
+    60% {
+        filter: brightness(2.2);
+    }
+    70% {
+        filter: brightness(4.2);
+    }
+    80% {
+        filter: brightness(2.2);
+    }
+    90% {
+        filter: brightness(4.2);
+    }
     100% {
         filter: brightness(1);
     }

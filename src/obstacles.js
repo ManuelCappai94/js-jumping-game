@@ -8,7 +8,7 @@ let startTimer = 0;
 let obstacleTypeIndex = 0;
 
 const BASE_SPEED = 150;
-const SPAWN_TIME = 2;
+const SPAWN_TIME = 1;
 
 const OBSTACLE_TYPES = [
   {
@@ -41,9 +41,39 @@ const OBSTACLE_TYPES = [
   },
 ];
 
+function getDifficultByScore(score){
+  switch (true) {
+    case score >= 300:
+      return {
+        level : 4,
+        baseSpeed: 300,
+        label : "Level 4",
+      };
+    case score >= 200:
+      return {
+        level : 3,
+        baseSpeed : 220,
+        label : "Level 3"
+      }
+      case score >= 100:
+        return {
+          level : 2,
+          baseSpeed : 180,
+          label : "Level 2",
+        }
+      default :
+      return {
+        level : 1,
+        baseSpeed : 150,
+        label: "Level 1"
+      }
+  }
+}
+
 function getRandomSpeed() {
-  const offsetSpeed = Math.floor(Math.random() * 120);
-  return BASE_SPEED + offsetSpeed;
+  const difficulty = getDifficultByScore(0)
+  const offsetSpeed = Math.floor(Math.random() * 80);
+  return  difficulty.baseSpeed + offsetSpeed;
 }
 
 function getNextObstacleType() {
