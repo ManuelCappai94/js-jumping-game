@@ -1,3 +1,5 @@
+import { addScore, score } from "./score.js";
+
 const obstacleContainer = document.querySelector(".obstacles")
 
 import { collision } from "./collision.js";
@@ -41,45 +43,78 @@ const OBSTACLE_TYPES = [
   },
 ];
 
-function getDifficultByScore(score){
+/*function getDifficultByScore(score) {
   switch (true) {
     case score >= 300:
       return {
-        level : 4,
+        level: 4,
         baseSpeed: 300,
-        label : "Level 4",
+        label: "Level 4",
       };
     case score >= 200:
       return {
-        level : 3,
-        baseSpeed : 220,
-        label : "Level 3"
+        level: 3,
+        baseSpeed: 220,
+        label: "Level 3"
       }
-      case score >= 100:
-        return {
-          level : 2,
-          baseSpeed : 180,
-          label : "Level 2",
-        }
-      default :
+    case score >= 100:
       return {
-        level : 1,
-        baseSpeed : 150,
+        level: 2,
+        baseSpeed: 180,
+        label: "Level 2",
+      }
+    default:
+      return {
+        level: 1,
+        baseSpeed: 150,
         label: "Level 1"
       }
   }
+}*/
+
+const difficulty = getDifficultyByScore(score);
+console.log(difficulty);
+
+function getDifficultyByScore(score) {
+  if (score >= 300) {
+    return {
+      level: 4,
+      baseSpeed: 300,
+      label: "Level 4",
+    };
+  } else if (score >= 200) {
+    return {
+      level: 3,
+      baseSpeed: 220,
+      label: "Level 3",
+    };
+  } else if (score >= 100) {
+    return {
+      level: 2,
+      baseSpeed: 180,
+      label: "Level 2",
+    };
+  } else {
+    return {
+      level: 1,
+      baseSpeed: 150,
+      label: "Level 1",
+    };
+  }
+  console.log(difficulty);
 }
 
 function getRandomSpeed() {
-  const difficulty = getDifficultByScore(300)
+  const difficulty = getDifficultyByScore(score);
   const offsetSpeed = Math.floor(Math.random() * 80);
-  return  difficulty.baseSpeed + offsetSpeed;
+
+  return difficulty.baseSpeed + offsetSpeed;
 }
 
 function getNextObstacleType() {
   const obstacleType = OBSTACLE_TYPES[obstacleTypeIndex];
 
-  obstacleTypeIndex = Math.floor(Math.random()*OBSTACLE_TYPES.length)
+  obstacleTypeIndex = Math.floor(Math.random() * OBSTACLE_TYPES.length)
 
   if (obstacleTypeIndex >= OBSTACLE_TYPES.length) {
     obstacleTypeIndex = 0;
@@ -88,54 +123,55 @@ function getNextObstacleType() {
   return obstacleType;
 }
 
-function createObstacleElement(obstacle){
-    const div = document.createElement("div")
+function createObstacleElement(obstacle) {
+  const div = document.createElement("div")
 
-    div.classList.add("obstacle", obstacle.className);
+  div.classList.add("obstacle", obstacle.className);
 
-    div.style.left = `${obstacle.x}px`;
-    div.style.top = `${obstacle.y}px`;
+  div.style.left = `${obstacle.x}px`;
+  div.style.top = `${obstacle.y}px`;
 
-    return div
+  return div
 }
-function randomObstacle (gameAreaWidth, groundY){
+function randomObstacle(gameAreaWidth, groundY) {
 
- const obstacleType = getNextObstacleType();
+  const obstacleType = getNextObstacleType();
 
-    const obstacle = {
-        id: crypto.randomUUID(),
-        type: obstacleType.id,
-        className: obstacleType.className,
-        x: gameAreaWidth,
-        y: groundY - obstacleType.height,
-        width: obstacleType.width,
-        height: obstacleType.height,
-        speed: getRandomSpeed(),
-        damage: obstacleType.damage,
-        hasHit: false,
-        element: null,
-    };
+  const obstacle = {
+    id: crypto.randomUUID(),
+    type: obstacleType.id,
+    className: obstacleType.className,
+    x: gameAreaWidth,
+    y: groundY - obstacleType.height,
+    width: obstacleType.width,
+    height: obstacleType.height,
+    speed: getRandomSpeed(),
+    damage: obstacleType.damage,
+    hasHit: false,
+    scored: false,
+    element: null,
+  };
 
-     obstacle.element = createObstacleElement(obstacle);
+  obstacle.element = createObstacleElement(obstacle);
 
-    return obstacle
+  return obstacle
 }
 
-export function spawnObstacles(deltatime, gameAreaWidth, groundY){
-   startTimer += deltatime
-   const random = Math.floor(Math.random()*2)
-    const randomSpawn = SPAWN_TIME + random
+export function spawnObstacles(deltatime, gameAreaWidth, groundY) {
+  startTimer += deltatime
+  const random = Math.floor(Math.random() * 2)
+  const randomSpawn = SPAWN_TIME + random
 
-     if(startTimer >= randomSpawn){
-         const newObstacle = randomObstacle(gameAreaWidth, groundY)
-        
-        obstacles.push(newObstacle)
+  if (startTimer >= randomSpawn) {
+    const newObstacle = randomObstacle(gameAreaWidth, groundY)
 
-        obstacleContainer.appendChild(newObstacle.element)
-        startTimer = 0
-     }
-    
-    // console.log(obstacles)
+    obstacles.push(newObstacle)
+
+    obstacleContainer.appendChild(newObstacle.element)
+    startTimer = 0
+  }
+
+  // console.log(obstacles)
 }
 
 // export function updateObstacles(deltaTime){
@@ -145,7 +181,7 @@ export function spawnObstacles(deltatime, gameAreaWidth, groundY){
 //         // console.log(obstacle.x + obstacle.width)
 //         const currentObstacle = obstacle.x + obstacle.width
 //         if(currentObstacle < 0){
-           
+
 //              obstacle.element.remove();
 //              obstacles.splice(0, 1)
 //         }
@@ -162,6 +198,11 @@ export function updateObstacles(deltaTime, player, groundY) {
 
     const obstacleRightEdge = obstacle.x + obstacle.width;
 
+    if (!obstacle.scored && obstacleRightEdge < player.x) {
+      addScore(10);
+      obstacle.scored = true;
+    }
+
     collision(player, obstacle, groundY, deltaTime)
 
     if (obstacleRightEdge < 0) {
@@ -170,7 +211,7 @@ export function updateObstacles(deltaTime, player, groundY) {
     }
   }
 
-//   console.log(obstacles);
+  //   console.log(obstacles);
 }
 
 export function resetObstacles() {

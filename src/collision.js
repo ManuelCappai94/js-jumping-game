@@ -1,3 +1,4 @@
+import { playDamageHitSound } from "./audio.js";
 
 let timer = 0
 
@@ -19,45 +20,47 @@ export function collision(player, obstacle, groundY, deltaTime) {
         playerBottom > obstacleTop &&
         playerTop < obstacleBottom
     ) {
-     
-        handleObstacleHit(player, obstacle,  deltaTime)
+
+        handleObstacleHit(player, obstacle, deltaTime)
     }
 }
 
-function handleObstacleHit(player, obstacle,  deltaTime){
-    if(obstacle.hasHit) return
+function handleObstacleHit(player, obstacle, deltaTime) {
+    if (obstacle.hasHit) return
     const knockBackAmount = player.speed * deltaTime * 60
-    
-          player.x -= knockBackAmount 
-          player.health -= obstacle.damage
-          player.hasTakenDamage = true
-         
-          obstacle.hasHit = true; 
-        //   player.isInvincible = true;
-        //   player.invincibilityTimer = player.invincibilityDuration;
-      
 
-          if (player.health <= 0) {
-                 player.health = 0;
-                player.isDead = true;
-             }
-        //   console.log(player.health, player.isDead)
-       
+    player.x -= knockBackAmount
+    player.health -= obstacle.damage
+    player.hasTakenDamage = true
+
+    obstacle.hasHit = true;
+    playDamageHitSound();
+    //   player.isInvincible = true;
+    //   player.invincibilityTimer = player.invincibilityDuration;
+
+
+    if (player.health <= 0) {
+        player.health = 0;
+        player.isDead = true;
+
+    }
+    //   console.log(player.health, player.isDead)
+
 }
 
-export function boundaryCollision(player, gameArea, deltaTime){
-    const knockBackAmount = player.speed * deltaTime 
+export function boundaryCollision(player, gameArea, deltaTime) {
+    const knockBackAmount = player.speed * deltaTime
 
     const playerLeft = player.x;
     const playerRight = playerLeft + player.width;
 
     const gameAreaLeft = 0
-    const gameAreaRight =  gameArea.width
+    const gameAreaRight = gameArea.width
 
-    if(playerLeft < gameAreaLeft){
+    if (playerLeft < gameAreaLeft) {
         player.x += knockBackAmount
     }
-    if(playerRight >= gameAreaRight){
-        player.x -= knockBackAmount 
+    if (playerRight >= gameAreaRight) {
+        player.x -= knockBackAmount
     }
 }

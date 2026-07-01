@@ -18,8 +18,8 @@ const backgroundMusic = {
     defeatTheme: new Audio("./src/soundtrack/defeatTheme.wav"),
     JumpSFX: new Audio("./src/soundtrack/jump.wav"),
     playerDamage: new Audio("./src/soundtrack/playerDamage.wav"),
-    LandSFX: new Audio("./src/soundtrack/land.wav")
-
+    LandSFX: new Audio("./src/soundtrack/land.wav"),
+    deathScream: new Audio("./src/soundtrack/deathScream.wav"),
 };
 
 Object.values(backgroundMusic).forEach((track) => {
@@ -162,8 +162,15 @@ export async function startMusic() {
     // setTimeout(() => playTone(880, 0.08, "square", 0.28), 55);
 }*/
 
-export function playDamageHitSound(){
+export function playDamageHitSound() {
     currentSFX = backgroundMusic.playerDamage;
+    currentSFX.currentTime = 0;
+    currentSFX.volume = gameVolume;
+    currentSFX.play().catch(console.error);
+}
+
+export function playDeathScream() {
+    currentSFX = backgroundMusic.deathScream;
     currentSFX.currentTime = 0;
     currentSFX.volume = gameVolume;
     currentSFX.play().catch(console.error);
@@ -184,7 +191,7 @@ export function playLandSound() {
 }
 
 export function playMenuSound() {
-     playTone(523, 0.08, "sine", 0.28);
+    playTone(523, 0.08, "sine", 0.28);
 }
 
 export function setMusicPaused(isPaused) {

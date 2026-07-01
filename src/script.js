@@ -1,4 +1,4 @@
-import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, playMusic, stopMusic, setMusicPaused, setGameVolume, getGameVolume } from "./audio.js";
+import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, playMusic, stopMusic, setMusicPaused, setGameVolume, getGameVolume, playDeathScream} from "./audio.js";
 import { updatePlayer, player, keys } from "./player.js";
 import { spawnObstacles, updateObstacles, resetObstacles } from "./obstacles.js";
 import { boundaryCollision, collision  } from "./collision.js";
@@ -137,13 +137,6 @@ function renderPlayer() {
         player.hasTakenDamage = false;
 
     }
-}
-
-let score = 0;
-
-function addScore(points) {
-    score += points;
-    console.log(score);
 }
 
 let lastTime = 0;
@@ -288,6 +281,7 @@ function game(timeStamp) {
 
     if (player.isDead) {
         showGameOverMenu();
+        playDeathScream();
         console.log("DEATH BITCTH");
         return
     }
