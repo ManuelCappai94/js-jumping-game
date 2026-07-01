@@ -59,6 +59,8 @@ function game(timeStamp) {
     const deltaTime = (timeStamp - lastTime) / 1000;
     lastTime = timeStamp;
 
+    const gameAreaWidth = mainLayer.clientWidth;
+
     updatePlayer(deltaTime);
     renderPlayer();
     spawnObstacles(deltaTime, gameLayerWidth, groundY)

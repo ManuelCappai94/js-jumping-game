@@ -42,7 +42,7 @@ document.addEventListener("keyup", (e) => {
     keyHelper(false, e);
 });
 
-export function updatePlayer(deltaTime) {
+export function updatePlayer(deltaTime, gameAreaWidth) {
     if (keys.left) {
         player.x -= player.speed * deltaTime;
     }
@@ -50,6 +50,9 @@ export function updatePlayer(deltaTime) {
     if (keys.right) {
         player.x += player.speed * deltaTime;
     }
+
+    //This prevents the player from going out of bounds
+    player.x = Math.max(0, Math.min(player.x, gameAreaWidth - player.width));
 
     if (keys.jump && !player.isJumping) {
         player.velocityY = JUMP_FORCE;
