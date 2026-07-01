@@ -1,12 +1,31 @@
-.obstacles{
-    position: relative;
+.obstacles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
-.cactus {
-    position: absolute;
-    background-color: green;
-    width: 100px;
-    height: 200px;
-    right: 0;
-    /* bottom: 42px; */
-    /* z-index: 10; */
+
+.obstacle {
+  position: absolute;
+  background-color: green;
+}
+
+.obstacle--cactus-small {
+  width: 45px;
+  height: 70px;
+}
+
+.obstacle--cactus-medium {
+  width: 65px;
+  height: 90px;
+}
+
+.obstacle--cactus-large {
+  width: 80px;
+  height: 110px;
+}
+
+.obstacle--rock {
+  width: 90px;
+  height: 70px;
+  background-color: gray;
 }

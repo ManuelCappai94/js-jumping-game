@@ -7,7 +7,12 @@ export const player = {
     height: 70,
     speed: 240,
     velocityY: 0,
-    isJumping: false
+    isJumping: false,
+    health : 100,
+    // isInvincible: false,
+    // invincibilityTimer: 0,
+    // invincibilityDuration: 3,
+    isDead: false
 };
 
 export const keys = {
@@ -51,9 +56,6 @@ export function updatePlayer(deltaTime, gameAreaWidth) {
         player.x += player.speed * deltaTime;
     }
 
-    //This prevents the player from going out of bounds
-    player.x = Math.max(0, Math.min(player.x, gameAreaWidth - player.width));
-
     if (keys.jump && !player.isJumping) {
         player.velocityY = JUMP_FORCE;
         player.isJumping = true;
@@ -72,4 +74,13 @@ export function updatePlayer(deltaTime, gameAreaWidth) {
             playLandSound();
         }
     }
+
+//     if (player.isInvincible) {
+//         player.invincibilityTimer -= deltaTime;
+
+//     if (player.invincibilityTimer <= 0) {
+//         player.isInvincible = false;
+//         player.invincibilityTimer = 0;
+//     }
+// }
 }

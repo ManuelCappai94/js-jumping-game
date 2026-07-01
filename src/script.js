@@ -1,6 +1,7 @@
 import { startMusic, playMenuSound } from "./audio.js";
 import { updatePlayer, player, keys } from "./player.js";
 import { spawnObstacles, updateObstacles } from "./obstacles.js";
+import { collision } from "./collision.js";
 
 const gameCanvas = document.querySelector(".game");
 const mainMenu = gameCanvas.querySelector(".main-menu");
@@ -17,6 +18,8 @@ const groundTop = groundRect.top
 
 const groundY = groundTop - gameLayerTop
 
+// const playerRect = playerElement.getBoundingClientRect()
+// console.log(playerRect)
 
 function initMenuActions() {
     mainMenu.addEventListener("click", async (e) => {
@@ -64,7 +67,12 @@ function game(timeStamp) {
     updatePlayer(deltaTime);
     renderPlayer();
     spawnObstacles(deltaTime, gameLayerWidth, groundY)
-    updateObstacles(deltaTime)
+    updateObstacles(deltaTime, player, groundY)
+    
+    if(player.isDead){
+        console.log("DEATH BITCTH")
+        return
+    }
 
     requestAnimationFrame(game);
 }

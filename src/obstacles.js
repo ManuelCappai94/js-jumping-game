@@ -1,64 +1,108 @@
-
-
 const obstacleContainer = document.querySelector(".obstacles")
 
+import { collision } from "./collision.js";
+
 let obstacles = [];
-let startTimer = 0
+let startTimer = 0;
 
+let obstacleTypeIndex = 0;
 
+const BASE_SPEED = 150;
+const SPAWN_TIME = 2;
 
-function createObstacleElement(width, height, x, y){
+const OBSTACLE_TYPES = [
+  {
+    id: "cactus-small",
+    className: "obstacle--cactus-small",
+    width: 45,
+    height: 70,
+    damage: 10,
+  },
+  {
+    id: "cactus-medium",
+    className: "obstacle--cactus-medium",
+    width: 65,
+    height: 90,
+    damage: 20,
+  },
+  {
+    id: "cactus-large",
+    className: "obstacle--cactus-large",
+    width: 70,
+    height: 100,
+    damage: 30,
+  },
+  {
+    id: "rock",
+    className: "obstacle--rock",
+    width: 90,
+    height: 70,
+    damage: 40,
+  },
+];
+
+function getRandomSpeed() {
+  const offsetSpeed = Math.floor(Math.random() * 120);
+  return BASE_SPEED + offsetSpeed;
+}
+
+function getNextObstacleType() {
+  const obstacleType = OBSTACLE_TYPES[obstacleTypeIndex];
+
+  obstacleTypeIndex = Math.floor(Math.random()*OBSTACLE_TYPES.length)
+
+  if (obstacleTypeIndex >= OBSTACLE_TYPES.length) {
+    obstacleTypeIndex = 0;
+  }
+
+  return obstacleType;
+}
+
+function createObstacleElement(obstacle){
     const div = document.createElement("div")
-    div.classList.add("cactus")
 
-    div.style.width = `${width}px`;
-    div.style.height = `${height}px`;
-    div.style.left = `${x}px`;
-    div.style.top = `${y}px`;
+    div.classList.add("obstacle", obstacle.className);
+
+    div.style.left = `${obstacle.x}px`;
+    div.style.top = `${obstacle.y}px`;
+
     return div
 }
 function randomObstacle (gameAreaWidth, groundY){
-    const offsetWidth = Math.floor(Math.random()*20)
-    const offsetHeight = Math.floor(Math.random()*15)
-    const offsetSpeed = Math.floor(Math.random()*100)
 
-    const height = 100 + offsetHeight
+ const obstacleType = getNextObstacleType();
 
     const obstacle = {
-        id : crypto.randomUUID(),
-        width: 100 + offsetWidth,
-        x: gameAreaWidth ,
-        y:  groundY - height,
-        height: height,
-        speed : 150 + offsetSpeed,
+        id: crypto.randomUUID(),
+        type: obstacleType.id,
+        className: obstacleType.className,
+        x: gameAreaWidth,
+        y: groundY - obstacleType.height,
+        width: obstacleType.width,
+        height: obstacleType.height,
+        speed: getRandomSpeed(),
+        damage: obstacleType.damage,
+        hasHit: false,
         element: null,
-        type : ""
-    }
+    };
 
-    const newObstacle = createObstacleElement(
-        obstacle.width, 
-        obstacle.height,
-        obstacle.x,
-        obstacle.y,
-    )
-
-        obstacle.element = newObstacle
+     obstacle.element = createObstacleElement(obstacle);
 
     return obstacle
 }
 
 export function spawnObstacles(deltatime, gameAreaWidth, groundY){
-   
-  
-     startTimer += deltatime
-     if(startTimer >= 2){
+   startTimer += deltatime
+   const random = Math.floor(Math.random()*2)
+    const randomSpawn = SPAWN_TIME + random
+
+     if(startTimer >= randomSpawn){
          const newObstacle = randomObstacle(gameAreaWidth, groundY)
         
         obstacles.push(newObstacle)
 
         obstacleContainer.appendChild(newObstacle.element)
         startTimer = 0
-        // console.log(newObstacle.element)
      }
     
     // console.log(obstacles)
@@ -79,7 +123,7 @@ export function spawnObstacles(deltatime, gameAreaWidth, groundY){
 //     console.log(obstacles)
 // }
 
-export function updateObstacles(deltaTime) {
+export function updateObstacles(deltaTime, player, groundY) {
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const obstacle = obstacles[i];
 
@@ -88,11 +132,13 @@ export function updateObstacles(deltaTime) {
 
     const obstacleRightEdge = obstacle.x + obstacle.width;
 
+    collision(player, obstacle, groundY, deltaTime)
+
     if (obstacleRightEdge < 0) {
       obstacle.element.remove();
       obstacles.splice(i, 1);
     }
   }
 
-  console.log(obstacles);
+//   console.log(obstacles);
 }
