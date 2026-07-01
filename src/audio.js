@@ -9,7 +9,13 @@ let masterGain;
     494, 440, 392, 330
 ];*/
 
-let backgroundMusic;
+const backgroundMusic = {
+    mainMenuTheme: new Audio("./src/soundtrack/mainMenuTheme.wav"),
+    mainGameTheme: new Audio("./src/soundtrack/mainGameThemeLoop.wav"),
+    victoryTheme: new Audio("./src/soundtrack/victoryTheme.wav"),
+    defeatTheme: new Audio("./src/soundtrack/defeatTheme.wav"),
+};
+
 
 function getAudioContext() {
     if (!audioContext) {
@@ -41,16 +47,12 @@ function playTone(frequency, duration, type = "square", volume = 0.35) {
 }
 
 export function startMusic() {
-    if (!backgroundMusic) {
-        backgroundMusic = new Audio("./src/soundtrack/mainGameThemeLoop.wav");
-        backgroundMusic.loop = true;
-        backgroundMusic.volume = 0.6;
-    }
-    try {
-        backgroundMusic.play();
-    } catch (err) {
-        console.error("Couldn't play the music:", err);
-    }
+
+    backgroundMusic.mainGameTheme.play();
+    backgroundMusic.mainGameTheme.loop = true;
+    backgroundMusic.mainGameTheme.volume = 0.6;
+
+
 }
 
 /*
