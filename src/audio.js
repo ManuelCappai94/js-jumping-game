@@ -1,6 +1,8 @@
 let audioContext;
 let musicTimer;
 let masterGain;
+let gameVolume = 0.6;
+let isMusicPaused = false;
 
 /*const melody = [
     392, 392, 440, 494,
@@ -20,16 +22,38 @@ const backgroundMusic = {
 
 };
 
+Object.values(backgroundMusic).forEach((track) => {
+    track.preload = "auto";
+    track.volume = gameVolume;
+});
 
 function getAudioContext() {
     if (!audioContext) {
         audioContext = new AudioContext();
         masterGain = audioContext.createGain();
-        masterGain.gain.value = 0.13;
+        masterGain.gain.value = getToneVolume();
         masterGain.connect(audioContext.destination);
     }
 
     return audioContext;
+}
+
+function getToneVolume() {
+    return isMusicPaused ? gameVolume * 0.07 : gameVolume * 0.22;
+}
+
+function applyMusicVolume() {
+    if (!currentMusic) return;
+
+    currentMusic.volume = isMusicPaused ? gameVolume * 0.3 : gameVolume;
+}
+
+function applyToneVolume() {
+    if (!masterGain || !audioContext) return;
+
+    const now = audioContext.currentTime;
+    masterGain.gain.cancelScheduledValues(now);
+    masterGain.gain.setTargetAtTime(getToneVolume(), now, 0.08);
 }
 
 
@@ -58,7 +82,7 @@ export function playMusic(track) {
 
     currentMusic = track;
     currentMusic.loop = true;
-    currentMusic.volume = 0.6;
+    applyMusicVolume();
 
     currentMusic.play().catch(console.error);
 }
@@ -66,9 +90,11 @@ export function playMusic(track) {
 let currentSFX = null;
 
 export function playSFX(track) {
-    currentSFX == track;
+    currentSFX = track;
+    currentSFX.currentTime = 0;
+    currentSFX.volume = gameVolume;
 
-    currentSFX.play().catch(console.catch);
+    currentSFX.play().catch(console.error);
 }
 
 export function stopMusic() {
@@ -82,14 +108,14 @@ export function stopMusic() {
 export function mainMusic() {
     currentMusic = backgroundMusic.mainGameTheme;
     currentMusic.loop = true;
-    currentMusic.volume = 0.6;
+    applyMusicVolume();
     currentMusic.play().catch(console.error);
 }
 
 export function menuMusic() {
     currentMusic = backgroundMusic.mainMenuTheme;
     currentMusic.loop = true;
-    currentMusic.volume = 0.6;
+    applyMusicVolume();
     currentMusic.play().catch(console.error);
 }
 
@@ -97,7 +123,7 @@ export function victoryMusic() {
     stopMusic();
     currentMusic = backgroundMusic.victoryTheme;
     currentMusic.loop = false;
-    currentMusic.volume = 0.6;
+    applyMusicVolume();
     currentMusic.play().catch(console.error);
 }
 
@@ -105,7 +131,7 @@ export function defeatMusic() {
     stopMusic();
     currentMusic = backgroundMusic.defeatTheme;
     currentMusic.loop = false;
-    currentMusic.volume = 0.6;
+    applyMusicVolume();
     currentMusic.play().catch(console.error);
 }
 /*
@@ -138,19 +164,22 @@ export async function startMusic() {
 
 export function playDamageHitSound(){
     currentSFX = backgroundMusic.playerDamage;
-    currentSFX.volume = 0.6;
+    currentSFX.currentTime = 0;
+    currentSFX.volume = gameVolume;
     currentSFX.play().catch(console.error);
 }
 
 export function playJumpSound() {
     currentSFX = backgroundMusic.JumpSFX;
-    currentSFX.volume = 0.6;
+    currentSFX.currentTime = 0;
+    currentSFX.volume = gameVolume;
     currentSFX.play().catch(console.error);
 }
 
 export function playLandSound() {
     currentSFX = backgroundMusic.LandSFX;
-    currentSFX.volume = 0.6;
+    currentSFX.currentTime = 0;
+    currentSFX.volume = gameVolume;
     currentSFX.play().catch(console.error);
 }
 
@@ -159,8 +188,25 @@ export function playMenuSound() {
 }
 
 export function setMusicPaused(isPaused) {
-    if (!currentMusic) return;
+    isMusicPaused = isPaused;
+    applyMusicVolume();
+    applyToneVolume();
+}
 
-    currentMusic.volume = isPaused ? 0.18 : 0.6;
+export function setGameVolume(volume) {
+    gameVolume = Math.min(1, Math.max(0, volume));
+
+    Object.values(backgroundMusic).forEach((track) => {
+        if (track !== currentMusic) {
+            track.volume = gameVolume;
+        }
+    });
+
+    applyMusicVolume();
+    applyToneVolume();
+}
+
+export function getGameVolume() {
+    return gameVolume;
 }
 

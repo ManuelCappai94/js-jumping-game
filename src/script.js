@@ -1,4 +1,4 @@
-import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, playMusic, stopMusic, setMusicPaused } from "./audio.js";
+import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, playMusic, stopMusic, setMusicPaused, setGameVolume, getGameVolume } from "./audio.js";
 import { updatePlayer, player, keys } from "./player.js";
 import { spawnObstacles, updateObstacles, resetObstacles } from "./obstacles.js";
 import { boundaryCollision, collision  } from "./collision.js";
@@ -19,11 +19,13 @@ const groundRect = ground.getBoundingClientRect()
 const groundTop = groundRect.top
 
 const groundY = groundTop - gameLayerTop
+const volumeSliders = document.querySelectorAll(".volume-slider");
 
 // const playerRect = playerElement.getBoundingClientRect()
 // console.log(playerRect)
 
 function initMenuActions() {
+    initVolumeControls();
 
     mainMenu.addEventListener("click", async (e) => {
         const btn = e.target.closest("[data-action]");
@@ -91,6 +93,26 @@ function initMenuActions() {
             e.preventDefault();
             togglePause();
         }
+    });
+}
+
+function initVolumeControls() {
+    const initialVolume = Math.round(getGameVolume() * 100);
+
+    volumeSliders.forEach((slider) => {
+        slider.value = initialVolume;
+
+        slider.addEventListener("input", () => {
+            const volume = Number(slider.value) / 100;
+            setGameVolume(volume);
+            syncVolumeSliders(slider.value);
+        });
+    });
+}
+
+function syncVolumeSliders(value) {
+    volumeSliders.forEach((slider) => {
+        slider.value = value;
     });
 }
 // WIP ////////////////

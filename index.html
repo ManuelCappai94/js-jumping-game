@@ -16,6 +16,10 @@
             <section class="main-menu" aria-labelledby="game-title">
                 <h1 id="game-title">Super Jumping Bros</h1>
                 <p>Controls: A / D to move, Space to jump, P or Esc to pause</p>
+                <label class="volume-control">
+                    <span>Volume</span>
+                    <input class="volume-slider" type="range" min="0" max="100" value="60" aria-label="Game volume">
+                </label>
                 <div class="actions-container">
                     <button class="action-btn" data-action="start" type="button">Start</button>
                     <button class="action-btn" data-action="exit" type="button">Exit</button>
@@ -25,6 +29,10 @@
             <section class="pause-menu hide-pause-menu" aria-labelledby="pause-title">
                 <h2 id="pause-title">Paused</h2>
                 <p>Press P or Esc to resume</p>
+                <label class="volume-control">
+                    <span>Volume</span>
+                    <input class="volume-slider" type="range" min="0" max="100" value="60" aria-label="Game volume">
+                </label>
                 <div class="actions-container">
                     <button class="action-btn" data-action="resume" type="button">Resume</button>
                     <button class="action-btn action-btn--secondary" data-action="main-menu" type="button">Main Menu</button>
@@ -34,6 +42,10 @@
             <section class="game-over-menu hide-game-over-menu" aria-labelledby="game-over-title">
                 <h2 id="game-over-title">Game Over</h2>
                 <p>You ran out of health.</p>
+                <label class="volume-control">
+                    <span>Volume</span>
+                    <input class="volume-slider" type="range" min="0" max="100" value="60" aria-label="Game volume">
+                </label>
                 <div class="actions-container">
                     <button class="action-btn" data-action="retry" type="button">Retry</button>
                     <button class="action-btn action-btn--secondary" data-action="main-menu" type="button">Main Menu</button>
@@ -48,7 +60,12 @@
                     <span>Coins 00</span>
                     <span>World 1-1</span>
                     <span>Time 300</span>
+                    <label class="hud-volume">
+                        <span>Vol</span>
+                        <input class="volume-slider" type="range" min="0" max="100" value="60" aria-label="Game volume">
+                    </label>
                 </div>
+
 
                 <div class="player" id="player" aria-hidden="true">
                     <div class="head"></div>
