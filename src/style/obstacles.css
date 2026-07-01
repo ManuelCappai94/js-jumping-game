@@ -1,4 +1,12 @@
 .obstacles{
+    position: relative;
+}
+.cactus {
     position: absolute;
     background-color: green;
+    width: 100px;
+    height: 200px;
+    right: 0;
+    /* bottom: 42px; */
+    /* z-index: 10; */
 }

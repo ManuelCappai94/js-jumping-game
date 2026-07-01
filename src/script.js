@@ -1,11 +1,22 @@
 import { startMusic, playMenuSound } from "./audio.js";
 import { updatePlayer, player, keys } from "./player.js";
-import { spawnObstacles } from "./obstacles.js";
+import { spawnObstacles, updateObstacles } from "./obstacles.js";
 
 const gameCanvas = document.querySelector(".game");
 const mainMenu = gameCanvas.querySelector(".main-menu");
 const mainLayer = gameCanvas.querySelector(".game-layer--main");
 const playerElement = mainLayer.querySelector(".player");
+const ground = mainLayer.querySelector(".ground")
+
+const gameLayerRect = mainLayer.getBoundingClientRect()
+const gameLayerTop = gameLayerRect.top
+const gameLayerWidth = gameLayerRect.width
+
+const groundRect = ground.getBoundingClientRect()
+const groundTop = groundRect.top
+
+const groundY = groundTop - gameLayerTop
+
 
 function initMenuActions() {
     mainMenu.addEventListener("click", async (e) => {
@@ -50,7 +61,8 @@ function game(timeStamp) {
 
     updatePlayer(deltaTime);
     renderPlayer();
-    spawnObstacles(deltaTime)
+    spawnObstacles(deltaTime, gameLayerWidth, groundY)
+    updateObstacles(deltaTime)
 
     requestAnimationFrame(game);
 }
