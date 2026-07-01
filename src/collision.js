@@ -1,6 +1,5 @@
 import { playDamageHitSound } from "./audio.js";
 
-let timer = 0
 
 export function collision(player, obstacle, groundY, deltaTime) {
     const obstacleLeft = obstacle.x;

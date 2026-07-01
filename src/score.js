@@ -1,7 +1,7 @@
 export let score = 0;
 
-export function addScore(score) {
-    score += 10;
+export function addScore(points) {
+    score += points;
     console.log(score);
     return;
 }

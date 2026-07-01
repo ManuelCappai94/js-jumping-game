@@ -2,6 +2,7 @@ import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, playMus
 import { updatePlayer, player, keys } from "./player.js";
 import { spawnObstacles, updateObstacles, resetObstacles } from "./obstacles.js";
 import { boundaryCollision, collision  } from "./collision.js";
+import { resetScore } from "./score.js";
 
 const gameCanvas = document.querySelector(".game");
 const mainMenu = gameCanvas.querySelector(".main-menu");
@@ -224,6 +225,7 @@ function resetGameState() {
     keys.jump = false;
     resetObstacles();
     renderPlayer();
+    resetScore()
 }
 
 function restartGame() {
@@ -285,7 +287,6 @@ function game(timeStamp) {
         console.log("DEATH BITCTH");
         return
     }
- console.log(player.hasTakenDamage)
     startGameLoop();
 }
 
