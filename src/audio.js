@@ -46,15 +46,57 @@ function playTone(frequency, duration, type = "square", volume = 0.35) {
     oscillator.stop(now + duration + 0.02);
 }
 
-export function startMusic() {
+let currentMusic = null;
 
-    backgroundMusic.mainGameTheme.play();
-    backgroundMusic.mainGameTheme.loop = true;
-    backgroundMusic.mainGameTheme.volume = 0.6;
+function playMusic(track) {
+    if (currentMusic) {
+        currentMusic.pause();
+        currentMusic.currentTime = 0;
+    }
 
+    currentMusic = track;
+    currentMusic.mainGameTheme.loop = true;
+    currentMusic.mainGameTheme.volume = 0.6;
+
+    currentMusic.play().catch(console.error);
+}
+
+export function stopMusic() {
+    if (!currentMusic) return;
+
+    currentMusic.pause();
+    currentMusic.currentTime = 0;
+    currentMusic = null;
 
 }
 
+export function mainMusic() {
+    stopMusic();
+
+    currentMusic = backgroundMusic.mainGameTheme;
+    currentMusic.play();
+}
+
+export function menuMusic() {
+    stopMusic();
+
+    currentMusic = backgroundMusic.mainMenuTheme;
+    currentMusic.play();
+}
+
+export function victoryMusic() {
+    stopMusic();
+
+    currentMusic = backgroundMusic.victoryTheme;
+    currentMusic.play();
+}
+
+export function defeatMusic() {
+    stopMusic();
+
+    currentMusic = backgroundMusic.defeatTheme;
+    currentMusic.play();
+}
 /*
 export async function startMusic() {
     const ctx = getAudioContext();

@@ -1,4 +1,4 @@
-import { startMusic, playMenuSound } from "./audio.js";
+import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, stopMusic } from "./audio.js";
 import { updatePlayer, player, keys } from "./player.js";
 import { spawnObstacles, updateObstacles } from "./obstacles.js";
 
@@ -19,16 +19,24 @@ const groundY = groundTop - gameLayerTop
 
 
 function initMenuActions() {
+
+    const startMusicOnce = () => {
+        menuMusic();
+        document.removeEventListener("click", startMusicOnce);
+    };
+
+    document.addEventListener("click", startMusicOnce);
+
     mainMenu.addEventListener("click", async (e) => {
         const btn = e.target.closest("[data-action]");
-
         if (!btn) return;
 
         const action = btn.dataset.action;
 
         if (action === "start") {
+            stopMusic();
             playMenuSound();
-            await startMusic();
+            mainMusic();
             mainMenu.classList.add("hide-main-menu");
             requestAnimationFrame(game);
         }
@@ -41,6 +49,7 @@ function initMenuActions() {
 }
 
 function renderPlayer() {
+
     playerElement.style.transform = `translate(${player.x}px, ${-player.y}px)`;
 
     const isMoving = keys.left || keys.right;
@@ -70,3 +79,4 @@ function game(timeStamp) {
 }
 
 initMenuActions();
+
