@@ -1,7 +1,7 @@
 import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, playMusic, stopMusic } from "./audio.js";
 import { updatePlayer, player, keys } from "./player.js";
 import { spawnObstacles, updateObstacles } from "./obstacles.js";
-import { collision } from "./collision.js";
+import { boundaryCollision } from "./collision.js";
 
 const gameCanvas = document.querySelector(".game");
 const mainMenu = gameCanvas.querySelector(".main-menu");
@@ -71,12 +71,13 @@ function game(timeStamp) {
     const deltaTime = (timeStamp - lastTime) / 1000;
     lastTime = timeStamp;
 
-    const gameAreaWidth = mainLayer.clientWidth;
+    // const gameAreaWidth = mainLayer.clientWidth;
 
     updatePlayer(deltaTime);
     renderPlayer();
     spawnObstacles(deltaTime, gameLayerWidth, groundY)
     updateObstacles(deltaTime, player, groundY)
+    boundaryCollision(player, gameLayerRect, deltaTime )
     
     if(player.isDead){
         console.log("DEATH BITCTH")

@@ -41,3 +41,20 @@ function handleObstacleHit(player, obstacle,  deltaTime){
              }
           console.log(player.health, player.isDead)
 }
+
+export function boundaryCollision(player, gameArea, deltaTime){
+    const knockBackAmount = player.speed * deltaTime 
+
+    const playerLeft = player.x;
+    const playerRight = playerLeft + player.width;
+
+    const gameAreaLeft = 0
+    const gameAreaRight =  gameArea.width
+
+    if(playerLeft < gameAreaLeft){
+        player.x += knockBackAmount
+    }
+    if(playerRight >= gameAreaRight){
+        player.x -= knockBackAmount 
+    }
+}
