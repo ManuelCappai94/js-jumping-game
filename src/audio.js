@@ -138,17 +138,23 @@ export async function startMusic() {
 
 export function playDamageHitSound(){
     currentSFX = backgroundMusic.playerDamage;
+    currentSFX.volume = 0.6;
+    currentSFX.play().catch(console.error);
 }
 
 export function playJumpSound() {
     currentSFX = backgroundMusic.JumpSFX;
+    currentSFX.volume = 0.6;
+    currentSFX.play().catch(console.error);
 }
 
 export function playLandSound() {
     currentSFX = backgroundMusic.LandSFX;
+    currentSFX.volume = 0.6;
+    currentSFX.play().catch(console.error);
 }
 
 export function playMenuSound() {
-    // playTone(523, 0.08, "sine", 0.28);
+     playTone(523, 0.08, "sine", 0.28);
 }
 
