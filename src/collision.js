@@ -26,7 +26,7 @@ export function collision(player, obstacle, groundY, deltaTime) {
 
 function handleObstacleHit(player, obstacle,  deltaTime){
     if(obstacle.hasHit) return
-    const knockBackAmount = player.speed * deltaTime * 30
+    const knockBackAmount = player.speed * deltaTime * 60
     
           player.x -= knockBackAmount 
           player.health -= obstacle.damage

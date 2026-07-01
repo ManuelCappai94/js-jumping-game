@@ -157,11 +157,11 @@
     }
 
     30% {
-        filter: brightness(2.2);
+        filter: brightness(4.2);
     }
 
     60% {
-        filter: brightness(0.6);
+        filter: brightness(3.6);
     }
 
     100% {

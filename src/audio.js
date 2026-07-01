@@ -130,14 +130,14 @@ export async function startMusic() {
 
 export function playJumpSound() {
     currentSFX = backgroundMusic.JumpSFX;
-    setTimeout(() => playTone(880, 0.08, "square", 0.28), 55);
+    // setTimeout(() => playTone(880, 0.08, "square", 0.28), 55);
 }
 
 export function playLandSound() {
-    playTone(130, 0.07, "triangle", 0.22);
+    // playTone(130, 0.07, "triangle", 0.22);
 }
 
 export function playMenuSound() {
-    playTone(523, 0.08, "sine", 0.28);
+    // playTone(523, 0.08, "sine", 0.28);
 }
 
