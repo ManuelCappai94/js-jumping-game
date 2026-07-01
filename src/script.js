@@ -61,6 +61,12 @@ function renderPlayer() {
     playerElement.classList.toggle("idle", !isMoving);
 }
 
+function displayScore() {
+
+    let score = 0;
+
+}
+
 let lastTime = 0;
 
 function game(timeStamp) {
@@ -77,9 +83,10 @@ function game(timeStamp) {
     renderPlayer();
     spawnObstacles(deltaTime, gameLayerWidth, groundY)
     updateObstacles(deltaTime, player, groundY)
-    
-    if(player.isDead){
-        console.log("DEATH BITCTH")
+
+    if (player.isDead) {
+        defeatMusic();
+        console.log("DEATH BITCTH");
         return
     }
 
