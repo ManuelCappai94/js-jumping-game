@@ -82,12 +82,12 @@ export function menuMusic() {
 
 export function victoryMusic() {
     currentMusic = backgroundMusic.victoryTheme;
-    currentMusic.play();
+    currentMusic.play.catch(console.error);
 }
 
 export function defeatMusic() {
     currentMusic = backgroundMusic.defeatTheme;
-    currentMusic.play();
+    currentMusic.play.catch(console.error);
 }
 /*
 export async function startMusic() {
