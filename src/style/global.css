@@ -82,7 +82,9 @@ body {
     z-index: 5;
 }
 
-.main-menu {
+.main-menu,
+.pause-menu,
+.game-over-menu {
     z-index: 10;
     position: absolute;
     inset: 0;
@@ -98,7 +100,24 @@ body {
         linear-gradient(#38bdf8, #fef3c7);
 }
 
-.main-menu h1 {
+.pause-menu,
+.game-over-menu {
+    z-index: 11;
+    background:
+        linear-gradient(rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.86)),
+        radial-gradient(circle at 50% 38%, rgba(253, 224, 71, 0.28), transparent 13rem);
+    backdrop-filter: blur(3px);
+}
+
+.game-over-menu {
+    background:
+        linear-gradient(rgba(69, 10, 10, 0.82), rgba(15, 23, 42, 0.9)),
+        radial-gradient(circle at 50% 36%, rgba(239, 68, 68, 0.32), transparent 13rem);
+}
+
+.main-menu h1,
+.pause-menu h2,
+.game-over-menu h2 {
     margin: 0;
     max-width: 10ch;
     color: #fef3c7;
@@ -107,7 +126,14 @@ body {
     text-shadow: 0 5px 0 #7f1d1d, 0 12px 24px rgba(0, 0, 0, 0.38);
 }
 
-.main-menu p {
+.pause-menu h2,
+.game-over-menu h2 {
+    font-size: clamp(2.6rem, 7vw, 4.2rem);
+}
+
+.main-menu p,
+.pause-menu p,
+.game-over-menu p {
     margin: 0;
     color: var(--mutedText);
     font-weight: 700;
@@ -145,8 +171,31 @@ body {
     box-shadow: 0 2px 0 var(--buttonShadow);
 }
 
-.hide-main-menu {
+.action-btn--secondary {
+    background: #2563eb;
+    box-shadow: 0 7px 0 #1e3a8a;
+}
+
+.action-btn--secondary:hover {
+    box-shadow: 0 9px 0 #1e3a8a;
+}
+
+.action-btn--secondary:active {
+    box-shadow: 0 2px 0 #1e3a8a;
+}
+
+.hide-main-menu,
+.hide-pause-menu,
+.hide-game-over-menu {
     display: none;
+}
+
+.game.is-paused .game-layer--background,
+.game.is-paused .game-layer--sky::before,
+.game.is-paused .player.running .arm,
+.game.is-paused .player.running .leg,
+.game.is-paused .player.idle .head {
+    animation-play-state: paused;
 }
 
 .hud {
