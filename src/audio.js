@@ -81,13 +81,19 @@ export function menuMusic() {
 }
 
 export function victoryMusic() {
+    stopMusic();
     currentMusic = backgroundMusic.victoryTheme;
-    currentMusic.play.catch(console.error);
+    currentMusic.loop = false;
+    currentMusic.volume = 0.6;
+    currentMusic.play().catch(console.error);
 }
 
 export function defeatMusic() {
+    stopMusic();
     currentMusic = backgroundMusic.defeatTheme;
-    currentMusic.play.catch(console.error);
+    currentMusic.loop = false;
+    currentMusic.volume = 0.6;
+    currentMusic.play().catch(console.error);
 }
 /*
 export async function startMusic() {
