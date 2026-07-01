@@ -49,4 +49,5 @@ function updateGameArea(){
     myGameArea.clear();
     myGameArea.newPos();
     myGameArea.update();
+    
 }
