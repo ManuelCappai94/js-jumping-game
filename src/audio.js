@@ -106,7 +106,7 @@ export function menuMusic() {
 }
 
 export function exitMusic() {
-  playMusic(audioTracks.victoryTheme, false)
+  playMusic(audioTracks.exitTheme, false)
 }
 
 export function defeatMusic() {
