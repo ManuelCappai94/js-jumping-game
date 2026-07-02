@@ -44,6 +44,12 @@ const groundTop = groundRect.top
 const groundY = groundTop - gameLayerTop
 
 
+let lastTime = 0;
+let isGameStarted = false;
+let isPaused = false;
+let isGameOver = false;
+let animationFrameId = null;
+
 
 function initMenuActions() {
     mainMenu.addEventListener("click", (e) => {
@@ -114,14 +120,6 @@ function initMenuActions() {
         }
     });
 }
-
-
-
-let lastTime = 0;
-let isGameStarted = false;
-let isPaused = false;
-let isGameOver = false;
-let animationFrameId = null;
 
 function startGameLoop() {
     if (animationFrameId !== null) return;

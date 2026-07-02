@@ -43,68 +43,48 @@ const OBSTACLE_TYPES = [
 
 function getDifficultyByScore(score) {
   switch (true) {
-    case score >= 300:
+    case score >= 1500:
+      return {
+        level: 5,
+        baseSpeed:340,
+        spawnTime: 0.8,
+        label: "Level 5",
+        message: "Survival Mode!"
+      }
+    case score >= 800:
       return {
         level: 4,
         baseSpeed: 300,
         spawnTime: 1,
         label: "Level 4",
+        message: "Extreme Speed!"
       };
-    case score >= 200:
+    case score >= 400:
       return {
         level: 3,
-        baseSpeed: 220,
+        baseSpeed: 230,
         spawnTime: 1.4,
-        label: "Level 3"
+        label: "Level 3",
+        message: "Things are getting dangerous!"
       }
-    case score >= 100:
+    case score >= 150:
       return {
         level: 2,
         baseSpeed: 180,
-        spawnTime: 1.7,
+        spawnTime: 1.6,
         label: "Level 2",
+        message: "Difficulty increased!",
       }
     default:
       return {
         level: 1,
         baseSpeed: 150,
         spawnTime: 2,
-        label: "Level 1"
+        label: "Level 1",
+        message: "Warm up!"
       }
   }
 }
-
-// const difficulty = getDifficultyByScore(score);
-// console.log(difficulty);
-
-// function getDifficultyByScore(score) {
-//   if (score >= 300) {
-//     return {
-//       level: 4,
-//       baseSpeed: 300,
-//       label: "Level 4",
-//     };
-//   } else if (score >= 200) {
-//     return {
-//       level: 3,
-//       baseSpeed: 220,
-//       label: "Level 3",
-//     };
-//   } else if (score >= 100) {
-//     return {
-//       level: 2,
-//       baseSpeed: 180,
-//       label: "Level 2",
-//     };
-//   } else {
-//     return {
-//       level: 1,
-//       baseSpeed: 150,
-//       label: "Level 1",
-//     };
-//   }
-//   console.log(difficulty);
-// }
 
 function getRandomSpeed(baseSpeed) {
   const offsetSpeed = Math.floor(Math.random() * 80);

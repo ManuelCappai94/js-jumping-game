@@ -34,10 +34,7 @@ function handleObstacleHit(player, obstacle, deltaTime) {
 
     obstacle.hasHit = true;
     playDamageHitSound();
-    //   player.isInvincible = true;
-    //   player.invincibilityTimer = player.invincibilityDuration;
-
-
+  
     if (player.health <= 0) {
         player.health = 0;
         player.isDead = true;
