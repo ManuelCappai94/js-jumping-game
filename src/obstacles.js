@@ -41,7 +41,7 @@ const OBSTACLE_TYPES = [
   },
 ];
 
-function getDifficultyByScore(score) {
+export function getDifficultyByScore(score) {
   switch (true) {
     case score >= 1500:
       return {

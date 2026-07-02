@@ -17,9 +17,22 @@ import {
     clearPlayerInput
 } from "./player.js";
 
-import { spawnObstacles, updateObstacles, resetObstacles } from "./obstacles.js";
+import {
+    renderHealthBar,
+    showDifficultyPopup,
+    updateDifficultyPopup,
+    removeDifficultyPopup
+} from "./hud.js"
+
+import {
+     spawnObstacles,
+      updateObstacles,
+       resetObstacles,
+        getDifficultyByScore
+} from "./obstacles.js";
+
 import { boundaryCollision } from "./collision.js";
-import { resetScore } from "./score.js";
+import { resetScore, score } from "./score.js";
 import { initVolumeControls } from "./volumeControls.js";
 
 const gameCanvas = document.querySelector(".game");
@@ -49,6 +62,7 @@ let isGameStarted = false;
 let isPaused = false;
 let isGameOver = false;
 let animationFrameId = null;
+let currentDifficultyLevel = 1;
 
 
 function initMenuActions() {
@@ -188,7 +202,12 @@ function resetGameState() {
     resetObstacles();
     renderPlayer(playerElement);
     resetScore()
-    renderHealthBar();
+    renderHealthBar(healthBarFill, healthValue, healthBar, player.health);
+    currentDifficultyLevel = 1;
+    removeDifficultyPopup();
+
+    const initialDifficulty = getDifficultyByScore(score);
+    showDifficultyPopup(mainLayer, initialDifficulty.message, initialDifficulty.label);
 }
 
 function restartGame() {
@@ -221,14 +240,15 @@ function showGameOverMenu() {
     gameCanvas.classList.remove("is-paused");
     defeatMusic();
 }
+function checkDifficultyChange() {
+    const difficulty = getDifficultyByScore(score);
 
-function renderHealthBar() {
-    const health = Math.max(0, Math.min(100, player.health));
+    if (difficulty.level === currentDifficultyLevel) return;
 
-    healthBarFill.style.width = `${health}%`;
-    healthValue.textContent = `${health}%`;
-    healthBar.setAttribute("aria-valuenow", health);
+    currentDifficultyLevel = difficulty.level;
+    showDifficultyPopup(mainLayer, difficulty.message, difficulty.label);
 }
+
 
 function game(timeStamp) {
     animationFrameId = null;
@@ -247,7 +267,9 @@ function game(timeStamp) {
     spawnObstacles(deltaTime, gameLayerWidth, groundY)
     updateObstacles(deltaTime, player, groundY)
     boundaryCollision(player, gameLayerRect, deltaTime )
-    renderHealthBar()
+    renderHealthBar(healthBarFill, healthValue, healthBar, player.health)
+    checkDifficultyChange()
+    updateDifficultyPopup(deltaTime)
 
     if (player.isDead) {
         showGameOverMenu();
