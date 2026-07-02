@@ -3,8 +3,8 @@ import { playJumpSound, playLandSound } from "./audio.js";
 export const player = {
     x: 80,
     y: 0,
-    width: 38,
-    height: 70,
+    width: 70,
+    height: 90,
     speed: 240,
     velocityY: 0,
     isJumping: false,
