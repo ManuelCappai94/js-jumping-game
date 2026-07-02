@@ -1,8 +1,26 @@
-import { menuMusic, mainMusic, victoryMusic, playMenuSound, defeatMusic, playMusic, stopMusic, setMusicPaused, setGameVolume, getGameVolume, playDeathScream} from "./audio.js";
-import { updatePlayer, player, keys } from "./player.js";
+import {
+    menuMusic,
+    mainMusic,
+    playMenuSound,
+    defeatMusic,
+    stopMusic,
+    setMusicPaused,
+    playDeathScream
+} from "./audio.js";
+
+import { 
+    updatePlayer,
+    player,
+    initPlayerAnimation,
+    renderPlayer,
+    resetPlayer,
+    clearPlayerInput
+} from "./player.js";
+
 import { spawnObstacles, updateObstacles, resetObstacles } from "./obstacles.js";
-import { boundaryCollision, collision  } from "./collision.js";
+import { boundaryCollision } from "./collision.js";
 import { resetScore } from "./score.js";
+import { initVolumeControls } from "./volumeControls.js";
 
 const gameCanvas = document.querySelector(".game");
 const mainMenu = gameCanvas.querySelector(".main-menu");
@@ -20,15 +38,11 @@ const groundRect = ground.getBoundingClientRect()
 const groundTop = groundRect.top
 
 const groundY = groundTop - gameLayerTop
-const volumeSliders = document.querySelectorAll(".volume-slider");
 
-// const playerRect = playerElement.getBoundingClientRect()
-// console.log(playerRect)
+
 
 function initMenuActions() {
-    initVolumeControls();
-
-    mainMenu.addEventListener("click", async (e) => {
+    mainMenu.addEventListener("click", (e) => {
         const btn = e.target.closest("[data-action]");
         if (!btn) return;
 
@@ -97,48 +111,7 @@ function initMenuActions() {
     });
 }
 
-function initVolumeControls() {
-    const initialVolume = Math.round(getGameVolume() * 100);
 
-    volumeSliders.forEach((slider) => {
-        slider.value = initialVolume;
-
-        slider.addEventListener("input", () => {
-            const volume = Number(slider.value) / 100;
-            setGameVolume(volume);
-            syncVolumeSliders(slider.value);
-        });
-    });
-}
-
-function syncVolumeSliders(value) {
-    volumeSliders.forEach((slider) => {
-        slider.value = value;
-    });
-}
-// WIP ////////////////
-playerElement.addEventListener("animationend", (e) => {
-    if (e.animationName === "player-flash") {
-        playerElement.classList.remove("damage");
-    }
-});
-
-function renderPlayer() {
-
-    playerElement.style.transform = `translate(${player.x}px, ${-player.y}px)`;
-
-    const isMoving = keys.left || keys.right;
-
-    playerElement.classList.toggle("running", isMoving);
-    playerElement.classList.toggle("idle", !isMoving);
-
-    if (player.hasTakenDamage) {
-        
-        playerElement.classList.add("damage");
-        player.hasTakenDamage = false;
-
-    }
-}
 
 let lastTime = 0;
 let isGameStarted = false;
@@ -173,10 +146,8 @@ function pauseGame() {
 
     isPaused = true;
     stopGameLoop();
-    keys.left = false;
-    keys.right = false;
-    keys.jump = false;
-    renderPlayer();
+    clearPlayerInput()
+    renderPlayer(playerElement);
     pauseMenu.classList.remove("hide-pause-menu");
     gameCanvas.classList.add("is-paused");
     setMusicPaused(true);
@@ -199,10 +170,8 @@ function returnToMainMenu() {
     isGameOver = false;
     lastTime = 0;
     stopGameLoop();
-    keys.left = false;
-    keys.right = false;
-    keys.jump = false;
-    renderPlayer();
+    clearPlayerInput()
+    renderPlayer(playerElement);
     pauseMenu.classList.add("hide-pause-menu");
     gameOverMenu.classList.add("hide-game-over-menu");
     mainMenu.classList.remove("hide-main-menu");
@@ -213,18 +182,9 @@ function returnToMainMenu() {
 }
 
 function resetGameState() {
-    player.x = 80;
-    player.y = 0;
-    player.velocityY = 0;
-    player.isJumping = false;
-    player.health = 100;
-    player.hasTakenDamage = false;
-    player.isDead = false;
-    keys.left = false;
-    keys.right = false;
-    keys.jump = false;
+    resetPlayer()
     resetObstacles();
-    renderPlayer();
+    renderPlayer(playerElement);
     resetScore()
 }
 
@@ -251,10 +211,8 @@ function showGameOverMenu() {
     isGameOver = true;
     lastTime = 0;
     stopGameLoop();
-    keys.left = false;
-    keys.right = false;
-    keys.jump = false;
-    renderPlayer();
+    clearPlayerInput();
+    renderPlayer(playerElement);
     pauseMenu.classList.add("hide-pause-menu");
     gameOverMenu.classList.remove("hide-game-over-menu");
     gameCanvas.classList.remove("is-paused");
@@ -273,10 +231,8 @@ function game(timeStamp) {
     const deltaTime = (timeStamp - lastTime) / 1000;
     lastTime = timeStamp;
 
-    // const gameAreaWidth = mainLayer.clientWidth;
-
     updatePlayer(deltaTime);
-    renderPlayer();
+    renderPlayer(playerElement);
     spawnObstacles(deltaTime, gameLayerWidth, groundY)
     updateObstacles(deltaTime, player, groundY)
     boundaryCollision(player, gameLayerRect, deltaTime )
@@ -284,11 +240,16 @@ function game(timeStamp) {
     if (player.isDead) {
         showGameOverMenu();
         playDeathScream();
-        console.log("DEATH BITCTH");
         return
     }
     startGameLoop();
 }
 
-initMenuActions();
+function initGame() {
+    initVolumeControls();
+    initMenuActions();
+    initPlayerAnimation(playerElement);
+}
+
+initGame();
 

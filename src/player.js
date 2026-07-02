@@ -10,9 +10,6 @@ export const player = {
     isJumping: false,
     health : 100,
     hasTakenDamage : false,
-    // isInvincible: false,
-    // invincibilityTimer: 0,
-    // invincibilityDuration: 3,
     isDead: false
 };
 
@@ -75,14 +72,47 @@ export function updatePlayer(deltaTime, gameAreaWidth) {
             playLandSound();
         }
     }
-   
+}
 
-//     if (player.isInvincible) {
-//         player.invincibilityTimer -= deltaTime;
+export function initPlayerAnimation(playerElement){
+    playerElement.addEventListener("animationend", (e) => {
+        if (e.animationName === "player-flash") {
+            playerElement.classList.remove("damage");
+        }
+    });
+}
 
-//     if (player.invincibilityTimer <= 0) {
-//         player.isInvincible = false;
-//         player.invincibilityTimer = 0;
-//     }
-// }
+export function renderPlayer(playerElement) {
+
+    playerElement.style.transform = `translate(${player.x}px, ${-player.y}px)`;
+
+    const isMoving = keys.left || keys.right;
+
+    playerElement.classList.toggle("running", isMoving);
+    playerElement.classList.toggle("idle", !isMoving);
+
+    if (player.hasTakenDamage) {
+        
+        playerElement.classList.add("damage");
+        player.hasTakenDamage = false;
+
+    }
+}
+
+export function clearPlayerInput() {
+    keys.left = false;
+    keys.right = false;
+    keys.jump = false;
+}
+
+export function resetPlayer() {
+    player.x = 80;
+    player.y = 0;
+    player.velocityY = 0;
+    player.isJumping = false;
+    player.health = 100;
+    player.hasTakenDamage = false;
+    player.isDead = false;
+
+    clearPlayerInput();
 }
