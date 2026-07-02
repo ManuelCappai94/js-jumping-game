@@ -5,7 +5,8 @@ import {
     defeatMusic,
     stopMusic,
     setMusicPaused,
-    playDeathScream
+    playDeathScream,
+    exitTheme
 } from "./audio.js";
 
 import { 
@@ -256,6 +257,7 @@ function checkDifficultyChange() {
 }
 function exitFromTheGame(){
     stopMusic();
+    exitFromTheGame()
     gameCanvas.remove()
     const section = document.createElement("section")
     section.classList.add("close-message")
