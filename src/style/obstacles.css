@@ -30,6 +30,6 @@
 .obstacle--rock {
   width: 90px;
   height: 70px;
-  background-color: gray;
+  /*background-color: gray;*/
   content: url(../images/boulder.png);
 }
