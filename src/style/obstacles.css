@@ -6,26 +6,30 @@
 
 .obstacle {
   position: absolute;
-  background-color: green;
+  /*background-color: green;*/
 }
 
 .obstacle--cactus-small {
   width: 45px;
   height: 70px;
+  content: url(../images/Cactus.png);
 }
 
 .obstacle--cactus-medium {
   width: 65px;
   height: 90px;
+  content: url(../images/Cactus.png);
 }
 
 .obstacle--cactus-large {
   width: 80px;
   height: 110px;
+  content: url(../images/Cactus.png);
 }
 
 .obstacle--rock {
   width: 90px;
   height: 70px;
-  background-color: gray;
+  /*background-color: gray;*/
+  content: url(../images/boulder.png);
 }
