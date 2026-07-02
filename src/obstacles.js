@@ -46,8 +46,8 @@ export function getDifficultyByScore(score) {
     case score >= 1500:
       return {
         level: 5,
-        baseSpeed:340,
-        spawnTime: 0.8,
+        baseSpeed:330,
+        spawnTime: 0.9,
         label: "Level 5",
         message: "Survival Mode!"
       }
