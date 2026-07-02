@@ -29,6 +29,10 @@ const gameOverMenu = gameCanvas.querySelector(".game-over-menu");
 const mainLayer = gameCanvas.querySelector(".game-layer--main");
 const playerElement = mainLayer.querySelector(".player");
 const ground = mainLayer.querySelector(".ground")
+const healthBar = mainLayer.querySelector(".health-bar");
+const healthBarFill = mainLayer.querySelector(".health-bar__fill");
+const healthValue = mainLayer.querySelector(".health-status__value");
+
 
 const gameLayerRect = mainLayer.getBoundingClientRect()
 const gameLayerTop = gameLayerRect.top
@@ -186,6 +190,7 @@ function resetGameState() {
     resetObstacles();
     renderPlayer(playerElement);
     resetScore()
+    renderHealthBar();
 }
 
 function restartGame() {
@@ -219,6 +224,14 @@ function showGameOverMenu() {
     defeatMusic();
 }
 
+function renderHealthBar() {
+    const health = Math.max(0, Math.min(100, player.health));
+
+    healthBarFill.style.width = `${health}%`;
+    healthValue.textContent = `${health}%`;
+    healthBar.setAttribute("aria-valuenow", health);
+}
+
 function game(timeStamp) {
     animationFrameId = null;
 
@@ -236,6 +249,7 @@ function game(timeStamp) {
     spawnObstacles(deltaTime, gameLayerWidth, groundY)
     updateObstacles(deltaTime, player, groundY)
     boundaryCollision(player, gameLayerRect, deltaTime )
+    renderHealthBar()
 
     if (player.isDead) {
         showGameOverMenu();

@@ -280,6 +280,35 @@ main {
     text-shadow: 0 2px 0 rgba(0, 0, 0, 0.28);
 }
 
+.health-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.health-status__label,
+.health-status__value {
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.health-bar {
+    width: 140px;
+    height: 16px;
+    border: 2px solid var(--gameBorder);
+    border-radius: 999px;
+    overflow: hidden;
+    background-color: var(--buttonShadow);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.45);
+}
+
+.health-bar__fill {
+    width: 100%;
+    height: 100%;
+    background-color: var(--herb);
+    transition: width 0.2s ease;
+}
+
 .hud-volume {
     grid-template-columns: auto 96px;
 }

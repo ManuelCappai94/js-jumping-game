@@ -71,15 +71,15 @@ function playTone(frequency, duration, type = "square", volume = 0.35) {
 
 function playMusic(track, isLooping = true) {
    
-        stopMusic();
+    stopMusic();
 
-        currentMusic = track;
-        currentMusic.loop = isLooping;
-        currentMusic.currentTime = 0;
+    currentMusic = track;
+    currentMusic.loop = isLooping;
+    currentMusic.currentTime = 0;
 
-        applyMusicVolume();
+    applyMusicVolume();
 
-        currentMusic.play().catch(console.error);
+    currentMusic.play().catch(console.error);
 }
 
 function playSFX(track) {
