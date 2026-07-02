@@ -7,7 +7,7 @@ let currentMusic = null;
 const audioTracks = {
     mainMenuTheme: new Audio("./src/soundtrack/mainMenuTheme.wav"),
     mainGameTheme: new Audio("./src/soundtrack/mainGameThemeLoop.wav"),
-    victoryTheme: new Audio("./src/soundtrack/victoryTheme.wav"),
+    exitTheme: new Audio("./src/soundtrack/exitTheme.wav"),
     defeatTheme: new Audio("./src/soundtrack/defeatTheme.wav"),
     JumpSFX: new Audio("./src/soundtrack/jump.wav"),
     playerDamage: new Audio("./src/soundtrack/playerDamage.wav"),
@@ -105,7 +105,7 @@ export function menuMusic() {
    playMusic(audioTracks.mainMenuTheme, true)
 }
 
-export function victoryMusic() {
+export function exitMusic() {
   playMusic(audioTracks.victoryTheme, false)
 }
 
