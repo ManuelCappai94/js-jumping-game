@@ -203,10 +203,6 @@ function resetGameState() {
     resetPlayer()
     resetObstacles();
     renderPlayer(playerElement);
-    /////////////////////////////
-    renderPlayer(playerElement);
-    renderPlayerHitboxDebug();
-    /////////////////////////////
     resetScore()
     renderHealthBar(healthBarFill, healthValue, healthBar, player.health);
     currentDifficultyLevel = 1;
@@ -277,23 +273,6 @@ function exitFromTheGame() {
     mainContaniner.appendChild(section)
 }
 
-
-///////////////da cancellare/////////////////////////////////
-const playerHitboxDebug = document.createElement("div");
-playerHitboxDebug.classList.add("player-hitbox-debug");
-mainLayer.appendChild(playerHitboxDebug);
-
-function renderPlayerHitboxDebug() {
-    const playerLeft = player.x;
-    const playerTop = groundY - player.y - player.height;
-
-    playerHitboxDebug.style.left = `${playerLeft}px`;
-    playerHitboxDebug.style.top = `${playerTop}px`;
-    playerHitboxDebug.style.width = `${player.width}px`;
-    playerHitboxDebug.style.height = `${player.height}px`;
-}
-////////////////////////////////////////////////////////////
-
 function game(timeStamp) {
     animationFrameId = null;
 
@@ -308,10 +287,6 @@ function game(timeStamp) {
 
     updatePlayer(deltaTime);
     renderPlayer(playerElement);
-    //////////////////////////
-    renderPlayer(playerElement);
-    renderPlayerHitboxDebug();
-    //////////////////////////////
     spawnObstacles(deltaTime, gameLayerWidth, groundY)
     updateObstacles(deltaTime, player, groundY)
     boundaryCollision(player, gameLayerRect, deltaTime)

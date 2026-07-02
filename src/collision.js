@@ -40,8 +40,6 @@ function handleObstacleHit(player, obstacle, deltaTime) {
         player.isDead = true;
 
     }
-    //   console.log(player.health, player.isDead)
-
 }
 
 export function boundaryCollision(player, gameArea, deltaTime) {

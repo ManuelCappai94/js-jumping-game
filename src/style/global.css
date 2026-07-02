@@ -40,12 +40,8 @@ main {
 
 .game {
     position: relative;
-    /* width: min(100%, 800px, calc((100dvh - 20px) * 2.22)); */
     width: 800px;
     height: 360px;
-    aspect-ratio: 20 / 9;
-    /* max-height: calc(100dvh - 20px); */
-    min-height: 240px;
     overflow: hidden;
     border: 4px solid var(--gameBorder);
     border-radius: 8px;
@@ -416,27 +412,8 @@ main {
 }
 
 
-
-.game.debug-hitboxes .obstacle {
-    outline: 2px solid rgb(255, 230, 0);
-}
-
-.player {
-    outline: 2px dashed rgba(255, 0, 0, 0.8);
-}
-
-.player-hitbox-debug {
-    position: absolute;
-    z-index: 999;
-    border: 2px solid lime;
-    background-color: rgba(0, 255, 0, 0.18);
-    pointer-events: none;
-}
-
-.obstacle-hitbox-debug {
-    position: absolute;
-    z-index: 999;
-    border: 2px solid lime;
-    background-color: rgba(0, 255, 0, 0.18);
-    pointer-events: none;
+@media (max-width: 860px) {
+    body {
+        padding: 0;
+    }
 }
