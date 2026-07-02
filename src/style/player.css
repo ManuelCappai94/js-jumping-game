@@ -1,3 +1,4 @@
+/*
 .player {
     position: absolute;
     left: 0;
@@ -6,8 +7,21 @@
     height: 70px;
     transform: translate(80px, 0);
     filter: drop-shadow(0 8px 5px rgba(0, 0, 0, 0.24));
+}*/
+
+.player {
+    position: absolute;
+    left: 0;
+    bottom: 42px;
+
+    width: 80px;
+    height: 120px;
+
+    transform: translate(80px, 0);
 }
 
+
+/*
 .head {
     position: absolute;
     left: 9px;
@@ -17,8 +31,23 @@
     border: 3px solid var(--playerBody);
     border-radius: 50%;
     background: var(--playerHead);
+    
+}*/
+
+.head {
+    position: absolute;
+    z-index: 5;
+
+    width: 54px;
+    height: 54px;
+
+    left: 13px;
+    top: 30px;
+
+    background: url("../images/grassHopperHead.png") center/contain no-repeat;
 }
 
+/*
 .head::before {
     content: "";
     position: absolute;
@@ -28,8 +57,19 @@
     height: 3px;
     border-radius: 50%;
     background: var(--playerBody);
+}*/
+
+
+.head::before {
+    position: absolute;
+    top: 10px;
+    right: 3px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
 }
 
+/*
 .body {
     position: absolute;
     left: 17px;
@@ -37,17 +77,35 @@
     width: 4px;
     height: 28px;
     background: var(--playerBody);
+}*/
+
+.body {
+    position: absolute;
+    z-index: 4;
+
+    width: 28px;
+    height: 34px;
+
+    left: 26px;
+    top: 70px;
+
+    background: url("../images/grassHopperTorso.png") center/contain no-repeat;
 }
 
 .arm {
     position: absolute;
+    z-index: 3;
+
+    width: 20px;
+    height: 10px;
+
     top: 28px;
-    width: 22px;
-    height: 4px;
-    background: var(--playerBody);
-    transform-origin: center;
+
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
+/*
 .arm.left {
     left: 0;
     transform: rotate(-25deg);
@@ -57,7 +115,53 @@
     right: 0;
     transform: rotate(25deg);
 }
+*/
 
+.arm.left {
+
+    width: 22px;
+    height: 18px;
+
+    left: 8px;
+    top: 72px;
+
+    background: url("../images/grassHopperLeftArm.png") center/contain no-repeat;
+
+    transform-origin: 95% 30%;
+    transform: rotate(18deg);
+}
+
+.arm.right {
+
+    width: 22px;
+    height: 18px;
+
+    left: 49px;
+    top: 72px;
+
+    background: url("../images/grassHopperRightArm.png") center/contain no-repeat;
+
+    transform-origin: 5% 30%;
+    transform: rotate(-18deg);
+}
+
+.leg {
+
+    position: absolute;
+    z-index: 3;
+
+    width: 18px;
+    height: 22px;
+
+    top: 50px;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    transform-origin: 50% 0%;
+}
+
+/*
 .leg {
     position: absolute;
     top: 47px;
@@ -65,8 +169,9 @@
     height: 4px;
     background: var(--playerBody);
     transform-origin: left center;
-}
+}*/
 
+/*
 .leg.left {
     left: 19px;
     transform: rotate(120deg);
@@ -76,6 +181,37 @@
     left: 19px;
     transform: rotate(60deg);
 }
+*/
+
+.leg.left {
+
+    width: 20px;
+    height: 30px;
+
+    left: 24px;
+    top: 94px;
+
+    background: url("../images/grassHopperLeftLeg.png") center/contain no-repeat;
+
+    transform-origin: 50% 0%;
+    transform: rotate(12deg);
+}
+
+.leg.right {
+
+    width: 20px;
+    height: 30px;
+
+    left: 38px;
+    top: 94px;
+
+    background: url("../images/grassHopperRightLeg.png") center/contain no-repeat;
+
+    transform-origin: 50% 0%;
+    transform: rotate(-12deg);
+}
+
+
 
 .player.running .arm.left {
     animation: left-arm-run 0.3s infinite alternate;
@@ -101,6 +237,7 @@
     animation: player-flash 1s ease;
 }
 
+/*
 @keyframes left-arm-run {
     from {
         transform: rotate(-35deg);
@@ -139,15 +276,56 @@
     to {
         transform: rotate(125deg);
     }
-}
+}*/
 
-@keyframes idle {
+@keyframes left-arm-run {
     from {
-        top: 0;
+        transform: rotate(30deg);
     }
 
     to {
-        top: 2px;
+        transform: rotate(-15deg);
+    }
+}
+
+@keyframes right-arm-run {
+    from {
+        transform: rotate(-30deg);
+    }
+
+    to {
+        transform: rotate(15deg);
+    }
+}
+
+@keyframes left-leg-run {
+    from {
+        transform: rotate(20deg);
+    }
+
+    to {
+        transform: rotate(-15deg);
+    }
+}
+
+@keyframes right-leg-run {
+    from {
+        transform: rotate(-20deg);
+    }
+
+    to {
+        transform: rotate(15deg);
+    }
+}
+
+
+@keyframes idle {
+    from {
+        top: 30px;
+    }
+
+    to {
+        top: 35px;
     }
 }
 
@@ -167,18 +345,23 @@
     50% {
         filter: brightness(4.2);
     }
+
     60% {
         filter: brightness(2.2);
     }
+
     70% {
         filter: brightness(4.2);
     }
+
     80% {
         filter: brightness(2.2);
     }
+
     90% {
         filter: brightness(4.2);
     }
+
     100% {
         filter: brightness(1);
     }
