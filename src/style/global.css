@@ -78,6 +78,10 @@ main {
 .game-layer--background {
     z-index: 2;
     background-image: url(../images/mountain.png);
+    background-image: url(../images/mountain.png);
+    background-image: url(../images/mountain.png);
+    background-image: url(../images/mountain.png);
+    background-image: url(../images/mountain.png);
     animation: background-drift 60s linear infinite;
 }
 
@@ -407,7 +411,7 @@ main {
         background-position: 0 0;
     }
     to {
-        background-position: -1000px 0; /* Moves left */
+        background-position: -1585px 0; /* Moves left */
     }
 }
 
