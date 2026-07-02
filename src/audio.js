@@ -1,17 +1,10 @@
 let audioContext;
-let musicTimer;
 let masterGain;
 let gameVolume = 0.6;
 let isMusicPaused = false;
+let currentMusic = null;
 
-/*const melody = [
-    392, 392, 440, 494,
-    523, 494, 440, 392,
-    330, 330, 392, 440,
-    494, 440, 392, 330
-];*/
-
-const backgroundMusic = {
+const audioTracks = {
     mainMenuTheme: new Audio("./src/soundtrack/mainMenuTheme.wav"),
     mainGameTheme: new Audio("./src/soundtrack/mainGameThemeLoop.wav"),
     victoryTheme: new Audio("./src/soundtrack/victoryTheme.wav"),
@@ -22,7 +15,7 @@ const backgroundMusic = {
     deathScream: new Audio("./src/soundtrack/deathScream.wav"),
 };
 
-Object.values(backgroundMusic).forEach((track) => {
+Object.values(audioTracks).forEach((track) => {
     track.preload = "auto";
     track.volume = gameVolume;
 });
@@ -75,26 +68,25 @@ function playTone(frequency, duration, type = "square", volume = 0.35) {
     oscillator.stop(now + duration + 0.02);
 }
 
-let currentMusic = null;
 
-export function playMusic(track) {
-    stopMusic();
+function playMusic(track, isLooping = true) {
+   
+        stopMusic();
 
-    currentMusic = track;
-    currentMusic.loop = true;
-    applyMusicVolume();
+        currentMusic = track;
+        currentMusic.loop = isLooping;
+        currentMusic.currentTime = 0;
 
-    currentMusic.play().catch(console.error);
+        applyMusicVolume();
+
+        currentMusic.play().catch(console.error);
 }
 
-let currentSFX = null;
+function playSFX(track) {
+    track.currentTime = 0;
+    track.volume = gameVolume;
 
-export function playSFX(track) {
-    currentSFX = track;
-    currentSFX.currentTime = 0;
-    currentSFX.volume = gameVolume;
-
-    currentSFX.play().catch(console.error);
+    track.play().catch(console.error);
 }
 
 export function stopMusic() {
@@ -106,88 +98,35 @@ export function stopMusic() {
 }
 
 export function mainMusic() {
-    currentMusic = backgroundMusic.mainGameTheme;
-    currentMusic.loop = true;
-    applyMusicVolume();
-    currentMusic.play().catch(console.error);
+   playMusic(audioTracks.mainGameTheme, true)
 }
 
 export function menuMusic() {
-    currentMusic = backgroundMusic.mainMenuTheme;
-    currentMusic.loop = true;
-    applyMusicVolume();
-    currentMusic.play().catch(console.error);
+   playMusic(audioTracks.mainMenuTheme, true)
 }
 
 export function victoryMusic() {
-    stopMusic();
-    currentMusic = backgroundMusic.victoryTheme;
-    currentMusic.loop = false;
-    applyMusicVolume();
-    currentMusic.play().catch(console.error);
+  playMusic(audioTracks.victoryTheme, false)
 }
 
 export function defeatMusic() {
-    stopMusic();
-    currentMusic = backgroundMusic.defeatTheme;
-    currentMusic.loop = false;
-    applyMusicVolume();
-    currentMusic.play().catch(console.error);
+    playMusic(audioTracks.defeatTheme, false)
 }
-/*
-export async function startMusic() {
-    const ctx = getAudioContext();
-
-    if (ctx.state === "suspended") {
-        await ctx.resume();
-    }
-
-    if (musicTimer) return;
-
-    let beat = 0;
-    musicTimer = setInterval(() => {
-        const note = melody[beat % melody.length];
-        playTone(note, 0.12, "square", 0.18);
-
-        if (beat % 4 === 0) {
-            playTone(note / 2, 0.18, "triangle", 0.12);
-        }
-
-        beat += 1;
-    }, 180);
-}*/
-
-/*export function playJumpSound() {
-    currentSFX = backgroundMusic.JumpSFX;
-    // setTimeout(() => playTone(880, 0.08, "square", 0.28), 55);
-}*/
 
 export function playDamageHitSound() {
-    currentSFX = backgroundMusic.playerDamage;
-    currentSFX.currentTime = 0;
-    currentSFX.volume = gameVolume;
-    currentSFX.play().catch(console.error);
+    playSFX(audioTracks.playerDamage);
 }
 
 export function playDeathScream() {
-    currentSFX = backgroundMusic.deathScream;
-    currentSFX.currentTime = 0;
-    currentSFX.volume = gameVolume;
-    currentSFX.play().catch(console.error);
+    playSFX(audioTracks.deathScream);
 }
 
 export function playJumpSound() {
-    currentSFX = backgroundMusic.JumpSFX;
-    currentSFX.currentTime = 0;
-    currentSFX.volume = gameVolume;
-    currentSFX.play().catch(console.error);
+    playSFX(audioTracks.JumpSFX);
 }
 
 export function playLandSound() {
-    currentSFX = backgroundMusic.LandSFX;
-    currentSFX.currentTime = 0;
-    currentSFX.volume = gameVolume;
-    currentSFX.play().catch(console.error);
+    playSFX(audioTracks.LandSFX);
 }
 
 export function playMenuSound() {
@@ -203,7 +142,7 @@ export function setMusicPaused(isPaused) {
 export function setGameVolume(volume) {
     gameVolume = Math.min(1, Math.max(0, volume));
 
-    Object.values(backgroundMusic).forEach((track) => {
+    Object.values(audioTracks).forEach((track) => {
         if (track !== currentMusic) {
             track.volume = gameVolume;
         }
