@@ -8,9 +8,9 @@
     --mutedText: #fde68a;
     --playerHead: rgb(224, 176, 103);
     --playerBody: rgb(32, 30, 30);
-    --terrain: #8b5a2b;
-    --terrainDark: #5f3515;
-    --herb: #7d8f2e;
+    --terrain: #c3453c;
+    --terrainDark: #8f322d;
+    --herb: #8f645d;
     --gameBorder: #f8fafc;
     --button: #ef4444;
     --buttonShadow: #7f1d1d;
@@ -61,7 +61,7 @@ main {
 .game-layer--sky {
     z-index: 1;
     background:
-        linear-gradient(#38bdf8 0%, #93c5fd 42%, #fde68a 100%);
+        linear-gradient(#293597 0%, #d44422 42%, #fce160 100%);
 }
 
 .game-layer--sky::before {
@@ -81,15 +81,11 @@ main {
 
 .game-layer--background {
     z-index: 2;
-    background:
-        radial-gradient(ellipse at 13% 29%, #ffffff 0 8%, transparent 8.5%),
-        radial-gradient(ellipse at 20% 25%, #ffffff 0 6%, transparent 6.5%),
-        radial-gradient(ellipse at 27% 30%, #ffffff 0 9%, transparent 9.5%),
-        linear-gradient(135deg, transparent 0 58%, #6b7280 58.2% 73%, transparent 73.2%) 0 92px / 260px 150px repeat-x,
-        linear-gradient(225deg, transparent 0 57%, #4b5563 57.2% 72%, transparent 72.2%) 60px 112px / 300px 140px repeat-x,
-        linear-gradient(to top, rgba(34, 197, 94, 0.22), transparent 32%);
-    animation: background-drift 22s linear infinite;
+    background-image: url(../images/mountain.png);
+    animation: background-drift 60s linear infinite;
 }
+
+
 
 .game-layer--main {
     z-index: 5;
@@ -412,11 +408,10 @@ main {
 
 @keyframes background-drift {
     from {
-        background-position: 0 0, 0 0, 0 0, 0 92px, 60px 112px, 0 0;
+        background-position: 0 0;
     }
-
     to {
-        background-position: 220px 0, 220px 0, 220px 0, -260px 92px, -240px 112px, 0 0;
+        background-position: -1000px 0; /* Moves left */
     }
 }
 
