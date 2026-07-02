@@ -10,7 +10,7 @@
     --playerBody: rgb(32, 30, 30);
     --terrain: #8b5a2b;
     --terrainDark: #5f3515;
-    --herb: #22c55e;
+    --herb: #7d8f2e;
     --gameBorder: #f8fafc;
     --button: #ef4444;
     --buttonShadow: #7f1d1d;
@@ -335,6 +335,55 @@ main {
     height: 12px;
     background:
         radial-gradient(circle at 8px 12px, var(--herb) 0 7px, transparent 7.5px) 0 0 / 24px 12px repeat-x;
+}
+
+.difficulty-popup {
+    position: absolute;
+    top: 58px;
+    left: 50%;
+    z-index: 20;
+
+    transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+
+    border: 3px solid var(--gameBorder);
+    border-radius: 15px;
+    background-color: var(--background);
+    box-shadow: 0 4px 0 var(--background);
+    color: var(--text);
+
+    font-weight: 700;
+    font-size: 1.2rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    pointer-events: none;
+    animation: difficulty-popup 1.4s ease-out forwards;
+}
+
+@keyframes difficulty-popup {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -8px);
+    }
+
+    15% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+
+    80% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -8px);
+    }
 }
 
 @keyframes sun-pulse {
