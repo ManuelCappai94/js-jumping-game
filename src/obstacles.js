@@ -18,16 +18,16 @@ const OBSTACLE_TYPES = [
   {
     id: "cactus-medium",
     className: "obstacle--cactus-medium",
-    width: 65,
-    height: 90,
+    width: 60,
+    height: 85,
     damage: 20,
     points: 20,
   },
   {
     id: "cactus-large",
     className: "obstacle--cactus-large",
-    width: 70,
-    height: 100,
+    width: 60,
+    height: 95,
     damage: 30,
      points: 40,
   },
@@ -51,7 +51,7 @@ export function getDifficultyByScore(score) {
         label: "Level 5",
         message: "Survival Mode!"
       }
-    case score >= 800:
+    case score >= 700:
       return {
         level: 4,
         baseSpeed: 300,
@@ -59,7 +59,7 @@ export function getDifficultyByScore(score) {
         label: "Level 4",
         message: "Extreme Speed!"
       };
-    case score >= 400:
+    case score >= 300:
       return {
         level: 3,
         baseSpeed: 230,
@@ -67,7 +67,7 @@ export function getDifficultyByScore(score) {
         label: "Level 3",
         message: "Things are getting dangerous!"
       }
-    case score >= 150:
+    case score >= 120:
       return {
         level: 2,
         baseSpeed: 180,
