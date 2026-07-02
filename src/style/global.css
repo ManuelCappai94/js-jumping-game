@@ -363,6 +363,18 @@ main {
     pointer-events: none;
     animation: difficulty-popup 1.4s ease-out forwards;
 }
+.close-message{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:1rem
+}
+.close-message h2 {
+    font-weight: 800;
+    text-shadow: 0 3px 0 #241c1c, 0 8px 16px rgba(0, 0, 0, 0.35);
+    font-size: 2rem;
+}
 
 @keyframes difficulty-popup {
     0% {

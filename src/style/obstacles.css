@@ -32,4 +32,5 @@
   height: 70px;
   background-color: gray;
   content: url(../images/boulder.png);
+  border-radius: 20px;
 }

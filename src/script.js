@@ -35,7 +35,8 @@ import { boundaryCollision } from "./collision.js";
 import { resetScore, score } from "./score.js";
 import { initVolumeControls } from "./volumeControls.js";
 
-const gameCanvas = document.querySelector(".game");
+const mainContaniner = document.querySelector(".main")
+const gameCanvas = mainContaniner.querySelector(".game");
 const mainMenu = gameCanvas.querySelector(".main-menu");
 const pauseMenu = gameCanvas.querySelector(".pause-menu");
 const gameOverMenu = gameCanvas.querySelector(".game-over-menu");
@@ -45,7 +46,7 @@ const ground = mainLayer.querySelector(".ground")
 const healthBar = mainLayer.querySelector(".health-bar");
 const healthBarFill = mainLayer.querySelector(".health-bar__fill");
 const healthValue = mainLayer.querySelector(".health-status__value");
-
+const finalScoreDisplay = gameOverMenu.querySelector(".final-score");
 
 const gameLayerRect = mainLayer.getBoundingClientRect()
 const gameLayerTop = gameLayerRect.top
@@ -91,7 +92,7 @@ function initMenuActions() {
 
         if (action === "exit") {
             playMenuSound();
-            console.log("exit-game");
+            exitFromTheGame()
         }
     });
 
@@ -227,12 +228,17 @@ function restartGame() {
     startGameLoop();
 }
 
+function renderFinalScore() {
+    finalScoreDisplay.textContent = `Final score: ${score}`;
+}
+
 function showGameOverMenu() {
     isGameStarted = false;
     isPaused = false;
     isGameOver = true;
     lastTime = 0;
     stopGameLoop();
+    renderFinalScore()
     clearPlayerInput();
     renderPlayer(playerElement);
     pauseMenu.classList.add("hide-pause-menu");
@@ -248,7 +254,22 @@ function checkDifficultyChange() {
     currentDifficultyLevel = difficulty.level;
     showDifficultyPopup(mainLayer, difficulty.message, difficulty.label);
 }
+function exitFromTheGame(){
+    stopMusic();
+    gameCanvas.remove()
+    const section = document.createElement("section")
+    section.classList.add("close-message")
 
+    const title = document.createElement("h2")
+    title.textContent = "Thank you for playing"
+
+    const paragraph = document.createElement("p")
+    paragraph.textContent = "Reload the page to play again"
+
+    section.appendChild(title)
+    section.appendChild(paragraph)
+    mainContaniner.appendChild(section)
+}
 
 function game(timeStamp) {
     animationFrameId = null;

@@ -11,7 +11,7 @@
     <script type="module" src="./src/script.js" defer></script>
 </head>
 <body>
-    <main>
+    <main class="main">
         <section class="game" aria-labelledby="game-title">
             <section class="main-menu" aria-labelledby="game-title">
                 <h1 id="game-title">Super Jumping Bros</h1>
@@ -42,6 +42,7 @@
             <section class="game-over-menu hide-game-over-menu" aria-labelledby="game-over-title">
                 <h2 id="game-over-title">Game Over</h2>
                 <p>You ran out of health.</p>
+                <p class="final-score">Final score: 0</p>
                 <label class="volume-control">
                     <span>Volume</span>
                     <input class="volume-slider" type="range" min="0" max="100" value="60" aria-label="Game volume">
