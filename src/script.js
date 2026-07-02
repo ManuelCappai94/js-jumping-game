@@ -6,10 +6,10 @@ import {
     stopMusic,
     setMusicPaused,
     playDeathScream,
-    exitTheme
+    exitMusic
 } from "./audio.js";
 
-import { 
+import {
     updatePlayer,
     player,
     initPlayerAnimation,
@@ -26,10 +26,10 @@ import {
 } from "./hud.js"
 
 import {
-     spawnObstacles,
-      updateObstacles,
-       resetObstacles,
-        getDifficultyByScore
+    spawnObstacles,
+    updateObstacles,
+    resetObstacles,
+    getDifficultyByScore
 } from "./obstacles.js";
 
 import { boundaryCollision } from "./collision.js";
@@ -205,7 +205,7 @@ function resetGameState() {
     renderPlayer(playerElement);
     /////////////////////////////
     renderPlayer(playerElement);
-renderPlayerHitboxDebug();
+    renderPlayerHitboxDebug();
     /////////////////////////////
     resetScore()
     renderHealthBar(healthBarFill, healthValue, healthBar, player.health);
@@ -259,9 +259,9 @@ function checkDifficultyChange() {
     currentDifficultyLevel = difficulty.level;
     showDifficultyPopup(mainLayer, difficulty.message, difficulty.label);
 }
-function exitFromTheGame(){
+function exitFromTheGame() {
     stopMusic();
-    exitFromTheGame()
+    exitMusic();
     gameCanvas.remove()
     const section = document.createElement("section")
     section.classList.add("close-message")
@@ -314,7 +314,7 @@ function game(timeStamp) {
     //////////////////////////////
     spawnObstacles(deltaTime, gameLayerWidth, groundY)
     updateObstacles(deltaTime, player, groundY)
-    boundaryCollision(player, gameLayerRect, deltaTime )
+    boundaryCollision(player, gameLayerRect, deltaTime)
     renderHealthBar(healthBarFill, healthValue, healthBar, player.health)
     checkDifficultyChange()
     updateDifficultyPopup(deltaTime)
