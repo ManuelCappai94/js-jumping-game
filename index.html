@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zippy the Hive Hopper</title>
-    <link rel="icon" type="image/x-icon" href="./src/images/favicon-16x16.png">
-    <link rel="icon" type="image/x-icon" href="./src/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" href="./src/images/favicon-16x16.png">
+    <link rel="icon" type="image/png" href="./src/images/favicon-32x32.png">
     <link rel="stylesheet" href="./src/style/global.css">
     <link rel="stylesheet" href="./src/style/player.css">
     <link rel="stylesheet" href="./src/style/obstacles.css">
@@ -13,9 +13,11 @@
 </head>
 <body>
     <main class="main">
-        <section class="game debug-hitboxes" aria-labelledby="game-title">
-            <section class="main-menu" aria-labelledby="game-title">
-                <picture class="zippyLogo"><img src="./src/images/logo.png"></picture>
+        <section class="game" aria-label="Zippy the Hive Hopper game area">
+            <section class="main-menu" aria-label="Main menu">
+                <picture class="zippyLogo">
+                    <img src="./src/images/logo.png" alt="Zippy he Hive Hopper logo">
+                </picture>
                 <p>Controls: A / D to move, Space to jump, P or Esc to pause</p>
                 <label class="volume-control">
                     <span>Volume</span>
@@ -90,7 +92,7 @@
                     <div class="leg left"></div>
                     <div class="leg right"></div>
                 </div>
-                <div class="obstacles"></div>
+                <div class="obstacles" aria-hidden="true"></div>
 
                 <div class="ground" aria-hidden="true"></div>
             </div>
