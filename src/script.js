@@ -54,7 +54,7 @@ const groundRect = ground.getBoundingClientRect()
 const groundTop = groundRect.top
 const groundY = groundTop - gameLayerTop
 
-let gameLayerWidth = mainLayer.getBoundingClientRect().width;
+let gameLayerWidth = 0;
 
 let lastTime = 0;
 let isGameStarted = false;
@@ -63,18 +63,6 @@ let isGameOver = false;
 let animationFrameId = null;
 let currentDifficultyLevel = 1;
 
-
-function refreshGameLayerWidth() {
-    gameLayerWidth = mainLayer.getBoundingClientRect().width;
-
-    if (player.x + player.width > gameLayerWidth) {
-        player.x = gameLayerWidth - player.width;
-    }
-
-    if (player.x < 0) {
-        player.x = 0;
-    }
-}
 
 function initMenuActions() {
     mainMenu.addEventListener("click", (e) => {
@@ -265,6 +253,7 @@ function checkDifficultyChange() {
     showDifficultyPopup(mainLayer, difficulty.message, difficulty.label);
 }
 function exitFromTheGame() {
+    window.removeEventListener("resize", refreshGameLayerWidth);
     stopMusic();
     exitMusic();
     gameCanvas.remove()
@@ -282,6 +271,25 @@ function exitFromTheGame() {
     mainContaniner.appendChild(section)
 }
 
+function refreshGameLayerWidth() {
+    gameLayerWidth = mainLayer.getBoundingClientRect().width;
+
+    if (player.x + player.width > gameLayerWidth) {
+        player.x = gameLayerWidth - player.width;
+    }
+
+    if (player.x < 0) {
+        player.x = 0;
+    }
+}
+
+function initResponsiveLayout() {
+    refreshGameLayerWidth();
+    window.addEventListener("resize", refreshGameLayerWidth);
+}
+
+
+
 function game(timeStamp) {
     animationFrameId = null;
 
@@ -295,10 +303,10 @@ function game(timeStamp) {
     lastTime = timeStamp;
 
     updatePlayer(deltaTime);
-    renderPlayer(playerElement);
     spawnObstacles(deltaTime, gameLayerWidth, groundY)
     updateObstacles(deltaTime, player, groundY)
     boundaryCollision(player, gameLayerWidth, deltaTime)
+    renderPlayer(playerElement);
     renderHealthBar(healthBarFill, healthValue, healthBar, player.health)
     checkDifficultyChange()
     updateDifficultyPopup(deltaTime)
@@ -315,6 +323,7 @@ function initGame() {
     initVolumeControls();
     initMenuActions();
     initPlayerAnimation(playerElement);
+    initResponsiveLayout();
 }
 
 window.addEventListener("resize", refreshGameLayerWidth);

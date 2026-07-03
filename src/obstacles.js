@@ -28,7 +28,7 @@ const OBSTACLE_TYPES = [
     className: "obstacle--cactus-large",
     width: 60,
     height: 95,
-    damage: 30,
+    damage: 25,
      points: 40,
   },
   {
@@ -46,8 +46,8 @@ export function getDifficultyByScore(score) {
     case score >= 1500:
       return {
         level: 5,
-        baseSpeed:330,
-        spawnTime: 0.9,
+        baseSpeed:350,
+        spawnTime: 1,
         label: "Level 5",
         message: "Survival Mode!"
       }
