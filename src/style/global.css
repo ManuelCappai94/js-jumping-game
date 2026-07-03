@@ -38,6 +38,12 @@ main {
     place-items: center;
 }
 
+.zippyLogo img {
+    width: 260px;
+    height: auto;
+    display: block;
+}
+
 .game {
     position: relative;
     width: 800px;
@@ -205,6 +211,7 @@ main {
 }
 
 @media (max-height: 430px) {
+
     .main-menu,
     .pause-menu,
     .game-over-menu {
@@ -358,13 +365,15 @@ main {
     pointer-events: none;
     animation: difficulty-popup 1.4s ease-out forwards;
 }
-.close-message{
+
+.close-message {
     position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap:1rem
+    gap: 1rem
 }
+
 .close-message h2 {
     font-weight: 800;
     text-shadow: 0 3px 0 #241c1c, 0 8px 16px rgba(0, 0, 0, 0.35);
@@ -407,8 +416,9 @@ main {
     from {
         background-position: 0 0;
     }
+
     to {
-        background-position: -1585px 0; 
+        background-position: -1585px 0;
     }
 }
 
