@@ -46,7 +46,7 @@ main {
 
 .game {
     position: relative;
-    width: 800px;
+    width: 1000px;
     height: 360px;
     overflow: hidden;
     border: 4px solid var(--gameBorder);
@@ -423,8 +423,17 @@ main {
 }
 
 
-@media (max-width: 860px) {
+@media (max-width: 1050px) {
     body {
         padding: 0;
+    }
+    .game{
+        width: 760px;
+    }
+}
+
+@media (max-width: 600px){
+    .game{
+        width: 500px ;
     }
 }

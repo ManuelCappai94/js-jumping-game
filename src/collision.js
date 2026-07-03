@@ -49,7 +49,7 @@ export function boundaryCollision(player, gameArea, deltaTime) {
     const playerRight = playerLeft + player.width;
 
     const gameAreaLeft = 0
-    const gameAreaRight = gameArea.width
+    const gameAreaRight = gameArea
 
     if (playerLeft < gameAreaLeft) {
         player.x += knockBackAmount

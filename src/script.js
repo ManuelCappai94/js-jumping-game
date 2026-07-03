@@ -49,15 +49,12 @@ const healthBarFill = mainLayer.querySelector(".health-bar__fill");
 const healthValue = mainLayer.querySelector(".health-status__value");
 const finalScoreDisplay = gameOverMenu.querySelector(".final-score");
 
-const gameLayerRect = mainLayer.getBoundingClientRect()
-const gameLayerTop = gameLayerRect.top
-const gameLayerWidth = gameLayerRect.width
-
+const gameLayerTop = mainLayer.getBoundingClientRect().top
 const groundRect = ground.getBoundingClientRect()
 const groundTop = groundRect.top
-
 const groundY = groundTop - gameLayerTop
 
+let gameLayerWidth = mainLayer.getBoundingClientRect().width;
 
 let lastTime = 0;
 let isGameStarted = false;
@@ -66,6 +63,18 @@ let isGameOver = false;
 let animationFrameId = null;
 let currentDifficultyLevel = 1;
 
+
+function refreshGameLayerWidth() {
+    gameLayerWidth = mainLayer.getBoundingClientRect().width;
+
+    if (player.x + player.width > gameLayerWidth) {
+        player.x = gameLayerWidth - player.width;
+    }
+
+    if (player.x < 0) {
+        player.x = 0;
+    }
+}
 
 function initMenuActions() {
     mainMenu.addEventListener("click", (e) => {
@@ -289,7 +298,7 @@ function game(timeStamp) {
     renderPlayer(playerElement);
     spawnObstacles(deltaTime, gameLayerWidth, groundY)
     updateObstacles(deltaTime, player, groundY)
-    boundaryCollision(player, gameLayerRect, deltaTime)
+    boundaryCollision(player, gameLayerWidth, deltaTime)
     renderHealthBar(healthBarFill, healthValue, healthBar, player.health)
     checkDifficultyChange()
     updateDifficultyPopup(deltaTime)
@@ -308,5 +317,6 @@ function initGame() {
     initPlayerAnimation(playerElement);
 }
 
+window.addEventListener("resize", refreshGameLayerWidth);
 initGame();
 
