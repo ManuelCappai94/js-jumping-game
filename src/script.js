@@ -326,6 +326,5 @@ function initGame() {
     initResponsiveLayout();
 }
 
-window.addEventListener("resize", refreshGameLayerWidth);
 initGame();
 
