@@ -20,7 +20,7 @@ export const keys = {
 };
 
 const GRAVITY = 900;
-const JUMP_FORCE = 450;
+const JUMP_FORCE = 550;
 
 function keyHelper(keyBoolean, event) {
     if (event.code === "KeyA") {
