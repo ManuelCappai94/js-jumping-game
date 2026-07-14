@@ -16,13 +16,13 @@
     --buttonShadow: #7f1d1d;
 }
 
+
 body {
     margin: 0;
     min-height: 100vh;
     min-height: 100dvh;
     display: grid;
     place-items: center;
-    padding: clamp(10px, 3vw, 28px);
     background:
         radial-gradient(circle at 50% 20%, rgba(125, 211, 252, 0.2), transparent 28rem),
         linear-gradient(135deg, #0f172a, #312e81 55%, #111827);
@@ -38,6 +38,7 @@ main {
     place-items: center;
 }
 
+
 .zippyLogo img {
     width: 260px;
     height: auto;
@@ -47,6 +48,7 @@ main {
 .game {
     position: relative;
     width: 950px;
+    max-width: 100vw;
     height: 360px;
     overflow: hidden;
     border: 4px solid var(--gameBorder);
@@ -87,8 +89,6 @@ main {
 
     animation: background-drift 60s linear infinite;
 }
-
-
 
 .game-layer--main {
     z-index: 5;
@@ -210,36 +210,6 @@ main {
     box-shadow: 0 2px 0 var(--buttonShadow);
 }
 
-@media (max-height: 430px) {
-
-    .main-menu,
-    .pause-menu,
-    .game-over-menu {
-        gap: 8px;
-        padding: 14px 22px;
-    }
-
-    .main-menu h1,
-    .pause-menu h2,
-    .game-over-menu h2 {
-        font-size: clamp(2rem, 8vmin, 3.5rem);
-        text-shadow: 0 3px 0 #7f1d1d, 0 8px 16px rgba(0, 0, 0, 0.35);
-    }
-
-    .main-menu p,
-    .pause-menu p,
-    .game-over-menu p {
-        font-size: 0.88rem;
-    }
-
-    .volume-control {
-        padding: 5px 10px;
-    }
-
-    .action-btn {
-        padding: 8px 18px;
-    }
-}
 
 .action-btn--secondary {
     background: #2563eb;
@@ -275,6 +245,7 @@ main {
     right: 16px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     color: #ffffff;
     font-size: 0.8rem;
     font-weight: 800;
@@ -380,6 +351,11 @@ main {
     font-size: 2rem;
 }
 
+.touch-controls-text,
+.mobile-orientation-alert {
+    display: none;
+}
+
 @keyframes difficulty-popup {
     0% {
         opacity: 0;
@@ -423,22 +399,158 @@ main {
 }
 
 
-@media (max-width: 992px) {
-    body {
-        padding: 0;
+@media screen and (max-width:600px) {
+   
+
+    .hud{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 0.75rem;
+        row-gap: 0.5rem;
     }
-    .game{
-        width: 760px;
+    .health-status{
+        justify-self: end;
+    }
+    .hud-volume{
+        justify-self: start;
+    }
+    .hud-pause-btn {
+        justify-self: end;
+    }
+    
+    .health-status__value{
+        display: none;
+    }
+
+    
+}
+
+@media (max-height: 430px) {
+
+    .main-menu,
+    .pause-menu,
+    .game-over-menu {
+        gap: 8px;
+        padding: 14px 22px;
+    }
+
+    .main-menu h1,
+    .pause-menu h2,
+    .game-over-menu h2 {
+        font-size: clamp(2rem, 8vmin, 3.5rem);
+        text-shadow: 0 3px 0 #7f1d1d, 0 8px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    .main-menu p,
+    .pause-menu p,
+    .game-over-menu p {
+        font-size: 0.88rem;
+    }
+
+    .volume-control {
+        padding: 5px 10px;
+    }
+
+    .action-btn {
+        padding: 8px 18px;
     }
 }
 
-@media (max-width: 768px){
-    .game{
-        width: 600px ;
+@media (hover: none) and (pointer: coarse) {
+    .keyboard-controls-text {
+    display: none;
+    }
+        .touch-controls-text {
+        display: block;
+    }
+
+}
+
+@media (hover: none) and (pointer: coarse) and (max-width:600px){
+    
+    .mobile-orientation-alert {
+      
+         display: block;
+        width: min(92vw, 420px);
+        padding: 0.55rem 0.75rem;
+        border: 2px solid rgba(255, 255, 255, 0.32);
+        border-radius: 10px;
+        background: rgba(15, 23, 42, 0.72);
+        color: var(--mutedText);
+        font-size: 0.78rem;
+        font-weight: 800;
+        line-height: 1.3;
+        text-align: center;
+        text-shadow: 0 2px 0 rgba(0, 0, 0, 0.28);
+        margin-bottom: 1rem;
     }
 }
-@media (max-width: 600px){
-    .game{
-        width: 500px ;
+
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 450px) {
+    body {
+        padding: 0;
+    }
+
+    .game {
+        width: 100vw;
+        max-width: 950px;
+        height: 100dvh;
+        max-height: 360px;
+        border-width: 2px;
+        border-radius: 0;
+    }
+
+    .hud {
+        top: 6px;
+        left: 8px;
+        right: 8px;
+        font-size: 0.7rem;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .health-bar {
+        width: 96px;
+        height: 12px;
+    }
+
+    .health-status__label,
+    .health-status__value {
+        font-size: 0.72rem;
+    }
+
+    .hud-volume {
+        grid-template-columns: auto 70px;
+        font-size: 0.68rem;
+    }
+
+    .main-menu,
+    .pause-menu,
+    .game-over-menu {
+        gap: 6px;
+        padding: 8px 16px;
+    }
+
+    .zippyLogo img {
+        width: 180px;
+    }
+
+    .main-menu p,
+    .pause-menu p,
+    .game-over-menu p {
+        font-size: 0.78rem;
+    }
+
+    .volume-control {
+        padding: 4px 8px;
+    }
+
+    .action-btn {
+        padding: 7px 14px;
+        min-width: 100px;
+    }
+
+    .mobile-orientation-alert{
+        display: none;
     }
 }

@@ -1,0 +1,92 @@
+.touch-controls, .hud-pause-btn {
+    display: none;
+}
+
+
+.touch-control-btn,
+.hud-pause-btn {
+  
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.72);
+    color: #ffffff;
+    font: inherit;
+    font-weight: 900;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.38);
+    touch-action: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+.touch-control-btn {
+    width: clamp(48px, 9vw, 62px);
+    height: clamp(48px, 9vw, 62px);
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+}
+
+.touch-control-btn--jump {
+    width: clamp(58px, 10vw, 74px);
+    height: clamp(58px, 10vw, 74px);
+    border-radius: 50%;
+    background: rgba(239, 68, 68, 0.82);
+}
+
+.hud-pause-btn {
+    width: 40px;
+    height: 35px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.touch-control-btn:active,
+.hud-pause-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.42);
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .touch-controls {
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 1rem;
+        pointer-events: none;
+    }
+
+    .touch-controls__movement,
+    .touch-controls__action {
+        display: flex;
+        gap: 0.75rem;
+        pointer-events: auto;
+    }
+
+    .touch-controls__movement {
+        gap: 2rem;
+    }
+
+    .hud-pause-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        touch-action: manipulation;
+        user-select: none;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 400px){
+    .touch-controls {
+        padding: 0.45rem 0.75rem;
+    }
+
+    
+    .touch-control-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}

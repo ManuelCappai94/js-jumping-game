@@ -15,7 +15,6 @@ import {
     initPlayerAnimation,
     renderPlayer,
     resetPlayer,
-    clearPlayerInput
 } from "./player.js";
 
 import {
@@ -31,6 +30,11 @@ import {
     resetObstacles,
     getDifficultyByScore
 } from "./obstacles.js";
+
+import{
+    clearPlayerInput,
+    initControls
+} from "./controls.js"
 
 import { boundaryCollision } from "./collision.js";
 import { resetScore, score } from "./score.js";
@@ -48,12 +52,9 @@ const healthBar = mainLayer.querySelector(".health-bar");
 const healthBarFill = mainLayer.querySelector(".health-bar__fill");
 const healthValue = mainLayer.querySelector(".health-status__value");
 const finalScoreDisplay = gameOverMenu.querySelector(".final-score");
+const hudPauseBtn = mainLayer.querySelector('[data-action="pause"]');
 
-const gameLayerTop = mainLayer.getBoundingClientRect().top
-const groundRect = ground.getBoundingClientRect()
-const groundTop = groundRect.top
-const groundY = groundTop - gameLayerTop
-
+let groundY = 0;
 let gameLayerWidth = 0;
 
 let lastTime = 0;
@@ -122,6 +123,15 @@ function initMenuActions() {
         if (action === "main-menu") {
             returnToMainMenu();
         }
+    });
+
+    hudPauseBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!isGameStarted || isGameOver || isPaused) return;
+
+        togglePause();
     });
 
     document.addEventListener("keydown", (e) => {
@@ -253,7 +263,7 @@ function checkDifficultyChange() {
     showDifficultyPopup(mainLayer, difficulty.message, difficulty.label);
 }
 function exitFromTheGame() {
-    window.removeEventListener("resize", refreshGameLayerWidth);
+    window.removeEventListener("resize", refreshGameLayerMetrics);
     stopMusic();
     exitMusic();
     gameCanvas.remove()
@@ -271,8 +281,12 @@ function exitFromTheGame() {
     mainContaniner.appendChild(section)
 }
 
-function refreshGameLayerWidth() {
+function refreshGameLayerMetrics() {
     gameLayerWidth = mainLayer.getBoundingClientRect().width;
+
+    const gameLayerTop = mainLayer.getBoundingClientRect().top;
+    const groundTop = ground.getBoundingClientRect().top;
+    groundY = groundTop - gameLayerTop;
 
     if (player.x + player.width > gameLayerWidth) {
         player.x = gameLayerWidth - player.width;
@@ -284,8 +298,8 @@ function refreshGameLayerWidth() {
 }
 
 function initResponsiveLayout() {
-    refreshGameLayerWidth();
-    window.addEventListener("resize", refreshGameLayerWidth);
+    refreshGameLayerMetrics();
+    window.addEventListener("resize", refreshGameLayerMetrics);
 }
 
 
@@ -324,6 +338,7 @@ function initGame() {
     initMenuActions();
     initPlayerAnimation(playerElement);
     initResponsiveLayout();
+    initControls()
 }
 
 initGame();

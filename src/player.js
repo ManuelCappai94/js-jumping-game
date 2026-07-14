@@ -1,4 +1,5 @@
 import { playJumpSound, playLandSound } from "./audio.js";
+import { keys, clearPlayerInput } from "./controls.js";
 
 export const player = {
     x: 80,
@@ -13,39 +14,10 @@ export const player = {
     isDead: false
 };
 
-export const keys = {
-    left: false,
-    right: false,
-    jump: false
-};
-
 const GRAVITY = 900;
-const JUMP_FORCE = 550;
+const JUMP_FORCE = 480;
 
-function keyHelper(keyBoolean, event) {
-    if (event.code === "KeyA") {
-        keys.left = keyBoolean;
-    }
-
-    if (event.code === "KeyD") {
-        keys.right = keyBoolean;
-    }
-
-    if (event.code === "Space") {
-        event.preventDefault();
-        keys.jump = keyBoolean;
-    }
-}
-
-document.addEventListener("keydown", (e) => {
-    keyHelper(true, e);
-});
-
-document.addEventListener("keyup", (e) => {
-    keyHelper(false, e);
-});
-
-export function updatePlayer(deltaTime, gameAreaWidth) {
+export function updatePlayer(deltaTime) {
     if (keys.left) {
         player.x -= player.speed * deltaTime;
     }
@@ -97,12 +69,6 @@ export function renderPlayer(playerElement) {
         player.hasTakenDamage = false;
 
     }
-}
-
-export function clearPlayerInput() {
-    keys.left = false;
-    keys.right = false;
-    keys.jump = false;
 }
 
 export function resetPlayer() {
