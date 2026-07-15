@@ -16,13 +16,25 @@
     touch-action: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.touch-control-icon {
+    width: 70%;
+    height: 70%;
+    display: block;
+    fill: currentColor;
+    pointer-events: none;
+    
 }
 
 
 .touch-control-btn {
     width: clamp(48px, 9vw, 62px);
     height: clamp(48px, 9vw, 62px);
-    font-size: clamp(1.4rem, 3vw, 1.8rem);
 }
 
 .touch-control-btn--jump {
@@ -30,6 +42,7 @@
     height: clamp(58px, 10vw, 74px);
     border-radius: 50%;
     background: rgba(239, 68, 68, 0.82);
+    font-size: 1.5rem;
 }
 
 .hud-pause-btn {
@@ -55,9 +68,18 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
-        padding: 1rem;
+        padding: 1rem 1.2rem ;
         pointer-events: none;
     }
+
+    .touch-controls__movement {
+        margin-left: 0.5rem;
+    }
+
+    .touch-controls__action {
+        margin-right: 0.5rem;
+    }
+
 
     .touch-controls__movement,
     .touch-controls__action {
@@ -79,12 +101,19 @@
     }
 }
 
-@media (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 400px){
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 450px){
     .touch-controls {
-        padding: 0.45rem 0.75rem;
+        padding: 1rem 1.4rem 2rem;
+    }
+      .touch-controls__movement {
+        margin-left: 1.5rem;
     }
 
-    
+    .touch-controls__action {
+        margin-right: 1.5rem;
+    }
+
+ 
     .touch-control-btn {
         min-width: 44px;
         min-height: 44px;
